@@ -2,7 +2,11 @@ language: python
 branches:
   only:
     - master
-    
+deploy:
+  provider: heroku
+  api_key: ffac8c94-3488-4db2-8302-b14e7b731efd
+  app: encuesta-preinscripcion-bknd
+
 install:
   - pip install -r requirements.txt
 
