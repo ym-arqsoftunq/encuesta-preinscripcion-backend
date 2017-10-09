@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -42,6 +42,10 @@ def get_alumnos():
 @app.route('/materias', methods=['GET'])
 def get_materias():
     return jsonify({'materias': materias})
+
+@app.route('/inscribir', methods=['POST'])
+def post_inscribir():
+    return jsonify({'alumno': request.json['alumno'], 'materias': request.json['materias']})
 
 
 if __name__ == '__main__':
