@@ -1,8 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import os
 import json
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 alumnos = [
     {
@@ -43,11 +45,17 @@ def get_alumnos():
 def get_materias():
     return jsonify({'materias': materias})
 
+
 @app.route('/oferta/<alumno_id>', methods=['GET'])
 def get_encuesta(alumno_id):
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     json_url = os.path.join(SITE_ROOT, "encuesta.json")
     return jsonify(json.load(open(json_url)))
+
+
+@app.route('/inscribir', methods=['POST'])
+def post_inscribir():
+    return jsonify({'alumno': request.json['alumno'], 'materias': request.json['materias']})
 
 
 if __name__ == '__main__':
