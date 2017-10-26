@@ -1,0 +1,31 @@
+{
+  "id_carrera": 1,
+  "oferta": {
+            "id": 1,
+            "nombre": "2017s2"
+          },
+  "materias_aprobadas": [
+          {
+            "id": 5,
+            "nombre": "Arquitectura de Computadoras"
+
+          },
+          {
+            "id": 6,
+            "nombre": "Matematica 1"
+          }
+
+    ],
+    "materias_cursables": [
+          {
+            "id": 9,
+            "nombre": "Algoritmos",
+            "comisiones": [{ "id":1, "descripcion": "De 16hs a 20hs" }]
+          }
+    ],
+    "fecha": "2017-08-15",
+    "alumno": {
+        "id": 150,
+        "nombre": "Nestor"
+    }
+  }
