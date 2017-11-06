@@ -22,7 +22,73 @@
           {
             "id": 9,
             "nombre": "Algoritmos",
-            "comisiones": [{ "id":1, "descripcion": "De 16hs a 20hs" }]
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 10,
+            "nombre": "Introduccion a la programacion",
+            "comisiones": [
+                { "id":1, "descripcion": "Miercoles de 16hs a 20hs" },
+                { "id":2, "descripcion": "Jueves y viernes de 18hs a 20hs" }
+              ]
+          },          {
+            "id": 11,
+            "nombre": "Programacion con objetos I",
+            "comisiones": [
+                            { "id":1, "descripcion": "Jueves de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Lunes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 12,
+            "nombre": "Organizacion de computadoras",
+            "comisiones": [
+                            { "id":1, "descripcion": "Sabado de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y jueves de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 13,
+            "nombre": "Sistemas operativos",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 14,
+            "nombre": "Programacion con objetos II",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 15,
+            "nombre": "Programacion Concurrente",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 16,
+            "nombre": "Estructuras de datos",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 17,
+            "nombre": "Programacion funcional",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
+          },          {
+            "id": 18,
+            "nombre": "Elementos de ingeniera de software",
+            "comisiones": [
+                            { "id":1, "descripcion": "Lunes de 16hs a 20hs" },
+                            { "id":2, "descripcion": "Martes y viernes de 18hs a 20hs" }
+                          ]
           }
     ],
     "fecha": "2017-08-15",

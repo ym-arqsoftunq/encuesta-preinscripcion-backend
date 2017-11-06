@@ -53,9 +53,13 @@ def get_encuesta(alumno_id):
     return jsonify(json.load(open(json_url)))
 
 
-@app.route('/inscribir', methods=['POST'])
-def post_inscribir():
-    return jsonify({'alumno': request.json['alumno'], 'materias': request.json['materias']})
+@app.route('/preinscribir', methods=['POST'])
+def post_preinscribir():
+    return jsonify({
+        'alumno': request.json['alumno'],
+        'materias_aprobadas': request.json['materias_aprobadas'],
+        'materias_preinscripcion': request.json['materias_preinscripcion']
+        });
 
 
 if __name__ == '__main__':
