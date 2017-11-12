@@ -2,10 +2,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
 import json
-#pip install --upgrade google-auth
-from google.oauth2 import id_token
-#pip install requests
-#from google.auth.transport import requests
 import requests
 
 app = Flask(__name__)
