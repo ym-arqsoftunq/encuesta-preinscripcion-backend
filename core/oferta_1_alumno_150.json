@@ -1,0 +1,50 @@
+{
+   "id_carrera":1,
+   "oferta":{
+      "id":1,
+      "nombre":"2017s2"
+   },
+   "materias_aprobadas":[
+      {
+         "id":5,
+         "nombre":"Arquitectura de Computadoras",
+         "comisiones":[
+            {
+               "id":2,
+               "descripcion":"De 20hs a 22hs"
+            }
+         ]
+      },
+      {
+         "id":6,
+         "nombre":"Matematica 1",
+         "comisiones":[
+            {
+               "id":8,
+               "descripcion":"De 12hs a 13hs"
+            },
+            {
+               "id":9,
+               "descripcion":"De 14hs a 16hs"
+            }
+         ]
+      }
+   ],
+   "materias_cursables":[
+      {
+         "id":9,
+         "nombre":"Algoritmos",
+         "comisiones":[
+            {
+               "id":1,
+               "descripcion":"De 16hs a 20hs"
+            }
+         ]
+      }
+   ],
+   "fecha":"2017-08-15",
+   "alumno":{
+      "id":150,
+      "nombre":"Nestor"
+   }
+}
