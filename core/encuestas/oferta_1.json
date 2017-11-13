@@ -1,0 +1,186 @@
+{
+    "materias_aprobadas": [],
+    "materias_preinscripcion": [],
+   "materias_cursables":[
+      {
+         "comisiones":[
+            {
+               "descripcion":"De 20hs a 22hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":8,
+         "id":5,
+         "nombre":"Arquitectura de Computadoras"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"De 12hs a 13hs",
+               "id":8
+            },
+            {
+               "descripcion":"De 14hs a 16hs",
+               "id":9
+            }
+         ],
+         "cuatrimestre":1,
+         "id":6,
+         "nombre":"Matematica 1"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Miercoles de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Jueves y viernes de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":1,
+         "id":10,
+         "nombre":"Introduccion a la programacion"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Sabado de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Martes y jueves de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":1,
+         "id":12,
+         "nombre":"Organizacion de computadoras"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Lunes de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Martes y viernes de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":2,
+         "id":16,
+         "nombre":"Estructuras de datos"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Lunes de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Martes y viernes de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":4,
+         "id":15,
+         "nombre":"Programacion Concurrente"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Lunes de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Martes y viernes de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":4,
+         "id":17,
+         "nombre":"Programacion funcional"
+      },
+      {
+         "comisiones":[
+            {
+               "descripcion":"Lunes de 16hs a 20hs",
+               "id":1
+            },
+            {
+               "descripcion":"Martes y viernes de 18hs a 20hs",
+               "id":2
+            }
+         ],
+         "cuatrimestre":8,
+         "id":9,
+         "nombre":"Algoritmos"
+     },
+     {
+        "comisiones":[
+           {
+              "descripcion":"Jueves de 16hs a 20hs",
+              "id":1
+           },
+           {
+              "descripcion":"Lunes y viernes de 18hs a 20hs",
+              "id":2
+           }
+        ],
+        "cuatrimestre":2,
+        "id":11,
+        "nombre":"Programacion con objetos I"
+     },
+     {
+        "comisiones":[
+           {
+              "descripcion":"Lunes de 16hs a 20hs",
+              "id":1
+           },
+           {
+              "descripcion":"Martes y viernes de 18hs a 20hs",
+              "id":2
+           }
+        ],
+        "cuatrimestre":2,
+        "id":13,
+        "nombre":"Sistemas operativos"
+     },
+     {
+        "comisiones":[
+           {
+              "descripcion":"Lunes de 16hs a 20hs",
+              "id":1
+           },
+           {
+              "descripcion":"Martes y viernes de 18hs a 20hs",
+              "id":2
+           }
+        ],
+        "cuatrimestre":3,
+        "id":14,
+        "nombre":"Programacion con objetos II"
+     },
+     {
+        "comisiones":[
+           {
+              "descripcion":"Lunes de 16hs a 20hs",
+              "id":1
+           },
+           {
+              "descripcion":"Martes y viernes de 18hs a 20hs",
+              "id":2
+           }
+        ],
+        "cuatrimestre":4,
+        "id":18,
+        "nombre":"Elementos de ingeniera de software"
+     }
+   ],
+   "oferta":{
+      "id":1,
+      "nombre":"2017s2"
+   }
+}
