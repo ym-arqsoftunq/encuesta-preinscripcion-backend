@@ -28,9 +28,9 @@ def post_preinscribir():
     return 'OK'
 
 
-#LOGIN
-@app.route('/login', methods=['POST'])
-def post_login():
+#LOGIN GOOGLE
+@app.route('/google-login', methods=['POST'])
+def post_google_login():
     #valido el token con un servicio de google
     j = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='+request.json['token']).content
     """
@@ -57,11 +57,30 @@ def post_login():
     """
     d = json.loads(j)
     username = d['email'].split('@')[0]
-    #print 'USER ID ' + userid
-    #TODO: con alguno de estos datos se deberia consultar la base para retornar la oferta del alumno
-    #podria ser el email
     repo = Repository()
     return jsonify(repo.get_encuesta_alumno(1, username))
+
+#LOGIN FACEBOOK
+@app.route('/facebook-login', methods=['POST'])
+def post_facebook_login():
+    #valido el token con un servicio de facebook
+    j = requests.get('https://graph.facebook.com/me?access_token='+request.json['token']).content
+    """
+    me devuelve un string con estos campos
+    {
+       "name": "Nestor Gabriel Munoz",
+       "id": "10215016199027875"
+    }
+    """
+    d = json.loads(j)
+    #chequeo que no haya devuelto error
+    if "name" in d and "id" in d:
+        #el email me llega en el request
+        username = request.json['email'].split('@')[0]
+        repo = Repository()
+        return jsonify(repo.get_encuesta_alumno(1, username))
+    else:
+        raise Exception('No se pudo validar el token')
 
 
 
