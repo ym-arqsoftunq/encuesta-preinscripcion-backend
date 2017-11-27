@@ -4,9 +4,31 @@ import os
 import json
 import requests
 from repository import Repository
+from flask_cli import FlaskCLI
+from flask_alembic import Alembic
+from flask_migrate import Migrate
+from flask.ext.migrate import MigrateCommand
+from flask.ext.script import Manager
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localhost/encuestas'
+from models import *
+db.init_app(app)
+
+
+FlaskCLI(app)
+@app.shell_context_processor
+def ctx():
+    return {'a':'b'}
+
+@app.cli.command('initdb')
+def initdb_command():
+    """Initializes the database."""
+    init_db()
+    print('Initialized the database.')
 
 @app.route('/alumnos', methods=['GET'])
 def get_alumnos():
@@ -81,9 +103,6 @@ def post_facebook_login():
         return jsonify(repo.get_encuesta_alumno(1, username))
     else:
         raise Exception('No se pudo validar el token')
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
