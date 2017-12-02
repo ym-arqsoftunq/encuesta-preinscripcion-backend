@@ -21,6 +21,11 @@ def get_encuesta(oferta_id, alumno_id):
     repo = Repository()
     return jsonify(repo.get_encuesta_alumno(oferta_id, alumno_id))
 
+@app.route('/resultados/<oferta_id>', methods=['GET'])
+def get_resultados(oferta_id):
+    repo = Repository()
+    return jsonify(repo.get_resultados(oferta_id))
+
 @app.route('/preinscribir', methods=['POST'])
 def post_preinscribir():
     repo = Repository()

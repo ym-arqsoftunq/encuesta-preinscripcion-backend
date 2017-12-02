@@ -26,3 +26,9 @@ class Repository(object):
         json_url = os.path.join(SITE_ROOT, "encuestas/oferta_%s_alumno_%s.json" % (oferta_id, alumno_id))
         with open(json_url, 'w') as fp:
             json.dump(encuesta, fp)
+
+    def get_resultados(self, oferta_id):
+        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+        json_url = os.path.join(SITE_ROOT, "encuestas/resultados.json") #Lo hardcodeo por ahora
+        data = json.load(open(json_url))
+        return data
