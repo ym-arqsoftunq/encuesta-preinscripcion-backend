@@ -5,7 +5,6 @@ from app import app
 
 db = SQLAlchemy(app)
 
-
 cursables = db.Table('cursables',
     db.Column('comision_id', db.Integer, db.ForeignKey('comisiones.id'), primary_key=True),
     db.Column('encuesta_id', db.Integer, db.ForeignKey('encuestas.id'), primary_key=True)
@@ -22,6 +21,12 @@ class Oferta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False, unique=False)
 
+    encuestas = relationship("Encuesta")
+
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+
 
 class Encuesta(db.Model):
     __tablename__ = 'encuestas'
@@ -29,14 +34,16 @@ class Encuesta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     alumno_id = db.Column(db.Integer, db.ForeignKey('alumnos.id'),
         nullable=False)
-    alumno = db.relationship('Alumno', backref='encuestas', lazy=False)
     oferta_id = db.Column(db.Integer, db.ForeignKey('ofertas.id'),
         nullable=False)
-    alumno = db.relationship('Oferta', backref='encuestas', lazy=False)
     aprobadas = db.relationship('Materia', secondary=aprobadas, lazy='subquery',
         backref=db.backref('encuestas', lazy=True))
     cursables = db.relationship('Comision', secondary=cursables, lazy='subquery',
         backref=db.backref('encuestas', lazy=True))
+
+    def __init__(self, oferta_id=None, alumno_id=None):
+        self.oferta_id = oferta_id
+        self.alumno_id = alumno_id
 
 class Alumno(db.Model):
     __tablename__ = 'alumnos'
@@ -45,6 +52,7 @@ class Alumno(db.Model):
     nombre = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
+    encuestas = relationship("Encuesta")
 
     def __init__(self, nombre=None, username=None, email=None):
         self.nombre = nombre
@@ -61,8 +69,6 @@ class Comision(db.Model):
     descripcion = db.Column(db.String(255), nullable=False)
     materia_id = db.Column(db.Integer, db.ForeignKey('materias.id'))
 
-    materia = db.relationship("Materia", backref='comisiones', lazy=False)
-
     def __init__(self, descripcion=None):
         self.descripcion = descripcion
 
@@ -75,6 +81,7 @@ class Materia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False, unique=False)
     cuatrimestre = db.Column(db.Integer, nullable=False, unique=False)
+    comisiones = relationship("Comision")
 
     def __init__(self, nombre=None, cuatrimestre=None):
         self.nombre = nombre

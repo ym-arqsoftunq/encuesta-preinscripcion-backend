@@ -9,13 +9,15 @@ from flask_alembic import Alembic
 from flask_migrate import Migrate
 from flask.ext.migrate import MigrateCommand
 from flask.ext.script import Manager
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localhost/encuestas'
-from models import *
+db = SQLAlchemy(app)
 db.init_app(app)
 
 
