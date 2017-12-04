@@ -32,6 +32,15 @@ def post_preinscribir():
     repo.guardar_encuesta_alumno(request.json)
     return 'OK'
 
+#LOGIN
+@app.route('/login', methods=['POST'])
+def post_login():
+    #TODO: validar email y password
+    email = request.json['email']
+    password = request.json['password']
+    username = email.split('@')[0]
+    repo = Repository()
+    return jsonify(repo.get_encuesta_alumno(1, username))
 
 #LOGIN GOOGLE
 @app.route('/google-login', methods=['POST'])
