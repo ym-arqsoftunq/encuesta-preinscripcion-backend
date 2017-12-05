@@ -60,3 +60,8 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
         """
+    def get_resultados(self, oferta_id):
+        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+        json_url = os.path.join(SITE_ROOT, "encuestas/resultados.json") #Lo hardcodeo por ahora
+        data = json.load(open(json_url))
+        return data

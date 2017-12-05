@@ -45,12 +45,26 @@ def get_encuesta(oferta_id, alumno_id):
     repo = Repository()
     return jsonify(repo.get_encuesta_alumno(oferta_id, alumno_id))
 
+@app.route('/resultados/<oferta_id>', methods=['GET'])
+def get_resultados(oferta_id):
+    repo = Repository()
+    return jsonify(repo.get_resultados(oferta_id))
+
 @app.route('/preinscribir', methods=['POST'])
 def post_preinscribir():
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)
     return 'OK'
 
+#LOGIN
+@app.route('/login', methods=['POST'])
+def post_login():
+    #TODO: validar email y password
+    email = request.json['email']
+    password = request.json['password']
+    username = email.split('@')[0]
+    repo = Repository()
+    return jsonify(repo.get_encuesta_alumno(1, username))
 
 #LOGIN GOOGLE
 @app.route('/google-login', methods=['POST'])

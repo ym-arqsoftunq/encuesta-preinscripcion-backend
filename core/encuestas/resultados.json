@@ -1,0 +1,75 @@
+{
+   "materias":[
+      {
+         "id":5,
+         "nombre":"Arquitectura de Computadoras",
+         "resultados": [
+             {
+                 "descripcion": "De 12hs a 13hs",
+                 "cantidad": 20
+            },
+            {
+                "descripcion": "Me gustaria cursar pero no puedo",
+                "cantidad": 50
+            },
+            {
+                "descripcion": "De 14hs a 16hs",
+                "cantidad": 40
+            },
+            {
+                "descripcion": "Ya aprobe",
+                "cantidad": 120
+            }
+         ]
+      },
+      {
+         "id":6,
+         "nombre":"Introduccion a la Programación",
+         "resultados": [
+             {
+                 "descripcion": "De 8hs a 12hs",
+                 "cantidad": 50
+            },
+            {
+                "descripcion": "De 12hs a 16hs",
+                "cantidad": 20
+            },
+            {
+                "descripcion": "Me gustaria cursar pero no puedo",
+                "cantidad": 30
+            },
+            {
+                "descripcion": "Ya aprobe",
+                "cantidad": 150
+            }
+         ]
+      },
+      {
+         "id":7,
+         "nombre":"Algoritmos",
+         "resultados": [
+             {
+                 "descripcion": "De 18hs a 20hs",
+                 "cantidad": 8
+            },
+            {
+                "descripcion": "De 20hs a 22hs",
+                "cantidad": 14
+            },
+            {
+                "descripcion": "Me gustaria cursar pero no puedo",
+                "cantidad": 30
+            },
+            {
+                "descripcion": "Ya aprobe",
+                "cantidad": 40
+            }
+         ]
+      }
+
+   ],
+   "oferta":{
+      "id":1,
+      "nombre":"2017s2"
+   }
+}
