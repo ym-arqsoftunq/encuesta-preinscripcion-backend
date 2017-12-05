@@ -11,13 +11,8 @@ class Repository(object):
         return encuesta
 
     def get_encuesta_alumno(self, oferta_id, alumno_id):
-        try:
-            SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-            json_url = os.path.join(SITE_ROOT, "encuestas/oferta_%s_alumno_%s.json" % (oferta_id, alumno_id))
-            data = json.load(open(json_url))
-        except:
-            data = self.get_oferta(oferta_id, alumno_id)
-        return data
+        encuesta = self.buscar_encuesta_alumno(oferta_id, alumno_id)
+        return encuesta.get_json_data()
 
     def guardar_encuesta_alumno(self, encuesta):
         oferta_id = encuesta['oferta']['id']

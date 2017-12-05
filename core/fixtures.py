@@ -47,7 +47,7 @@ def load_data(db):
     encuesta = Encuesta(oferta.id, alu.id)
     encuesta.aprobadas.append(m1)
     encuesta.aprobadas.append(m2)
-    encuesta.cursables.append(c5)
+    encuesta.preinscripcion.append(c5)
 
     db.session.commit()
 
