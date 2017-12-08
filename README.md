@@ -46,6 +46,11 @@ $ sudo apt-get update
 $ sudo apt-get install postgresql postgresql-contrib
 ```
 
+Por defecto, la instalación nos crea el usuario postgres
+``` bash
+$ sudo -i -u postgres
+```
+
 Una vez instalado, vamos a entrar a la consola de psql
 ``` bash
 $ psql
@@ -54,6 +59,12 @@ $ psql
 Una vez dentro, vamos a crear la base
 ``` bash
 create database encuestas
+```
+
+Ya tenemos la Base de Datos, ahora hay que configurar nuestro proyecto.
+En app.py
+``` bash
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
 ```
 
 El siguiente paso es crear el esquema de la base de datos y cargar los fixtures.
