@@ -10,16 +10,26 @@ from flask_migrate import Migrate
 from flask.ext.migrate import MigrateCommand
 from flask.ext.script import Manager
 from flask_sqlalchemy import SQLAlchemy
+from flask_user import roles_required, SQLAlchemyAdapter, UserManager
+from flask_login import login_user, LoginManager, login_required, logout_user
+
 
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localhost/encuestas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a06f5714d5608fbff0781726067683e830e8bc9a8864c93ec6d865c7c5e8d@ec2-23-23-150-141.compute-1.amazonaws.com:5432/dd19u18l7o7psc'
+app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 db = SQLAlchemy(app)
 db.init_app(app)
 
+
+db_adapter = SQLAlchemyAdapter(db,  'models.Usuario')
+user_manager = UserManager(db_adapter, app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 FlaskCLI(app)
 @app.shell_context_processor
@@ -41,30 +51,55 @@ def get_materias():
     return jsonify({'materias': materias})
 
 @app.route('/oferta/<oferta_id>/<alumno_id>', methods=['GET'])
+@login_required
+@roles_required('alumno')
 def get_encuesta(oferta_id, alumno_id):
     repo = Repository()
-    return jsonify(repo.get_encuesta_alumno(oferta_id, alumno_id))
+    return repo.get_encuesta_alumno(oferta_id, alumno_id)
 
 @app.route('/resultados/<oferta_id>', methods=['GET'])
+@login_required
+@roles_required('director')
 def get_resultados(oferta_id):
     repo = Repository()
     return jsonify(repo.get_resultados(oferta_id))
 
 @app.route('/preinscribir', methods=['POST'])
+@login_required
+@roles_required('alumno')
 def post_preinscribir():
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)
     return 'OK'
 
+@login_manager.user_loader
+def load_user(user_id):
+    from models import Usuario
+    return Usuario.query.get(user_id)
+
 #LOGIN
 @app.route('/login', methods=['POST'])
 def post_login():
-    #TODO: validar email y password
-    email = request.json['email']
-    password = request.json['password']
-    username = email.split('@')[0]
+    from models import Usuario
+    email = request.form['email']
+    password = request.form['password']
     repo = Repository()
-    return jsonify(repo.get_encuesta_alumno(1, username))
+    usuario = Usuario.query.filter_by(email=email).first()
+    #Esto hay que sacarlo
+    if usuario and usuario.password == password and login_user(usuario):
+        success = True
+        rol = usuario.roles[0].name
+    else:
+        success = False
+        rol = ''
+    return json.dumps({'success':success, 'rol': rol }), 200, {'ContentType':'application/json'}
+
+@app.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    success = logout_user()
+    return json.dumps({'success':success}), 200, {'ContentType':'application/json'}
+
 
 #LOGIN GOOGLE
 @app.route('/google-login', methods=['POST'])
@@ -96,7 +131,7 @@ def post_google_login():
     d = json.loads(j)
     username = d['email'].split('@')[0]
     repo = Repository()
-    return jsonify(repo.get_encuesta_alumno(1, username))
+    return repo.get_encuesta_alumno(1, username)
 
 #LOGIN FACEBOOK
 @app.route('/facebook-login', methods=['POST'])

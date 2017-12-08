@@ -3,40 +3,36 @@ import json
 
 class Repository(object):
 
-    def get_oferta(self, oferta_id, username):
-        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(SITE_ROOT, "encuestas/oferta_%s.json" % (oferta_id))
-        encuesta = json.load(open(json_url))
-        encuesta['alumno'] = {'username': username}
-        return encuesta
-
-    def get_encuesta_alumno(self, oferta_id, alumno_id):
-        encuesta = self.buscar_encuesta_alumno(oferta_id, alumno_id)
+    def get_encuesta_activa(self, username):
+        encuesta = self.buscar_encuesta_alumno(username)
         return encuesta.get_json_data()
 
-    def guardar_encuesta_alumno(self, encuesta):
-        oferta_id = encuesta['oferta']['id']
-        alumno_id = encuesta['alumno']['username']
-        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(SITE_ROOT, "encuestas/oferta_%s_alumno_%s.json" % (oferta_id, alumno_id))
-        with open(json_url, 'w') as fp:
-            json.dump(encuesta, fp)
+    def guardar_encuesta_alumno(self, data):
+        oferta_id = data['oferta']['id']
+        username = data['alumno']['username']
+        encuesta = self.buscar_encuesta_alumno(username)
+        self.guardar_materias_aprobadas(encuesta, data['materias_aprobadas'])
+        self.guardar_materias_cursables(encuesta, data['materias_cursables'])
+        self.guardar_materias_preinscripcion(encuesta, data['materias_preinscripcion'])
 
-    def buscar_encuesta_alumno(self, oferta_id, alumno_id):
+    def buscar_encuesta_alumno(self, username):
         """
         * Buscar una encuesta del alumno y la oferta actual
             * Si existe, la piso
             * Sino, la creo
         """
-        from models import Encuesta
-        encuesta = Encuesta.query.filter(Encuesta.oferta_id==oferta_id and Encuesta.alumno_id==alumno_id).first()
+        from models import Encuesta, Usuario, Oferta
+        #TODO: Catchear una posible excepcion
+        alumno = Usuario.query.filter_by(username=username).first()
+        oferta_activa = Oferta.query.filter_by(activa=True).first()
+        encuesta = Encuesta.query.filter_by(oferta_id=oferta_activa.id, alumno_id=alumno.id).first()
         if not encuesta:
-            encuesta = self.crear_encuesta(oferta_id, alumno_id)
+            encuesta = self.crear_encuesta(oferta_activa, alumno)
         return encuesta
 
-    def crear_encuesta(self, oferta_id, alumno_id):
+    def crear_encuesta(self, oferta, alumno):
         from models import Encuesta, db
-        encuesta = Encuesta(oferta_id, alumno_id)
+        encuesta = Encuesta(oferta.id, alumno.id)
         db.session.add(encuesta)
         db.session.commit()
         return encuesta
@@ -45,21 +41,32 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias aprobadas y lo relaciono
         """
+        from models import Materia, db
+        for data_materia in materias:
+            materia = Materia.query.filter(Materia.id == data_materia['id']).first()
+            encuesta.aprobadas.append(materia)
+        db.session.commit()
 
     def guardar_materias_cursables(self, encuesta, materias):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
         """
+        from models import Materia, db
+        for data_materia in materias:
+            materia = Materia.query.filter(Materia.id == data_materia['id']).first()
+            encuesta.cursables.append(materia)
+        db.session.commit()
 
-    def guardar_materias_cursables(self, encuesta, materias):
+    def guardar_materias_preinscripcion(self, encuesta, materias):
         """
-            * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
+            * Con la encuesta ya traida de la BD, recorro el json de materias preinscripcion y lo relaciono
         """
+        from models import Comision, db
+        for data_materia in materias:
+            comision = Comision.query.filter(Comision.id == data_materia['comision_seleccionada']['id']).first()
+            encuesta.preinscripcion.append(comision)
+        db.session.commit()
 
-    def guardar_materias_cursables(self, encuesta, materias):
-        """
-            * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
-        """
     def get_resultados(self, oferta_id):
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
         json_url = os.path.join(SITE_ROOT, "encuestas/resultados.json") #Lo hardcodeo por ahora

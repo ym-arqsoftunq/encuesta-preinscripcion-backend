@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship, sessionmaker
 from flask_sqlalchemy import SQLAlchemy
 from app import app
 import json
+from flask_user import UserMixin
 
 db = SQLAlchemy(app)
 
@@ -26,6 +27,7 @@ class Oferta(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False, unique=False)
+    activa = db.Column(db.Boolean, default=False)
 
     def __init__(self, nombre):
         self.nombre = nombre
@@ -39,10 +41,10 @@ class Encuesta(db.Model):
     __tablename__ = 'encuestas'
 
     id = db.Column(db.Integer, primary_key=True)
-    alumno_id = db.Column(db.Integer, db.ForeignKey('alumnos.id'),
+    alumno_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'),
         nullable=False)
 
-    alumno = db.relationship('Alumno',
+    alumno = db.relationship('Usuario',
         backref=db.backref('encuestas', lazy=True))
     oferta_id = db.Column(db.Integer, db.ForeignKey('ofertas.id'),
         nullable=False)
@@ -87,21 +89,28 @@ class Encuesta(db.Model):
             data['materias_preinscripcion'].append(json_comision)
 
 
-class Alumno(db.Model):
-    __tablename__ = 'alumnos'
+class Usuario(db.Model, UserMixin):
+    __tablename__ = 'usuarios'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False, default='')
+    roles = db.relationship('Rol', secondary='rolesusuarios',
+            backref=db.backref('usuarios', lazy='dynamic'))
 
-    def __init__(self, nombre=None, username=None, email=None):
+    def __init__(self, nombre=None, username=None, email=None, password=None):
         self.nombre = nombre
         self.username = username
         self.email = email
+        self.password = password
 
     def __repr__(self):
-        return "%d" % (self.nombre)
+        return "%s" % (self.nombre)
+
+    def get_id(self):
+        return self.id
 
     def asignar_datos(self, data):
         data['alumno'] = {}
@@ -130,6 +139,19 @@ class Comision(db.Model):
         data['id'] = self.id
         return data
 
+class MateriaResponse(db.Model):
+    __tablename__ = 'materiaresponses'
+
+    id = db.Column(db.Integer, primary_key=True)
+    materia_id = db.Column(db.Integer, db.ForeignKey('materias.id'))
+    materia = db.relationship('Materia',
+        backref=db.backref('responses', lazy=True))
+    descripcion = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, materia, descripcion):
+        self.materia = materia
+        self.descripcion = descripcion
+
 class Materia(db.Model):
     __tablename__ = 'materias'
 
@@ -152,3 +174,18 @@ class Materia(db.Model):
 
     def __repr__(self):
         return "%d" % (self.nombre)
+
+class Rol(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+    def __init__(self, name=None):
+        self.name = name
+
+# Define UserRoles model
+class RolesUsuario(db.Model):
+    __tablename__ = 'rolesusuarios'
+    id = db.Column(db.Integer(), primary_key=True)
+    usuario_id = db.Column(db.Integer(), db.ForeignKey('usuarios.id', ondelete='CASCADE'))
+    rol_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
