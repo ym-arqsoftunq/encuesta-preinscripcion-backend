@@ -9,8 +9,8 @@ def clear_data(db):
 
 def load_data(db):
     #Alumno
-    alu = Usuario('Juan Ignacio Yegro', 'juan.yegro', 'juan.yegro@unq.edu.ar', 'cosmic182')
-    director = Usuario('Director Bufarreta', 'director.bufarreta', 'director.bufarreta@unq.edu.ar', 'cosmico1')
+    alu = Usuario('Juan Ignacio Yegro', 'juan.yegro', 'juan.yegro@unq.edu.ar', 'alumno')
+    director = Usuario('Director', 'director', 'director@unq.edu.ar', 'director')
 
     rol_alu = Rol('alumno')
     rol_dir = Rol('director')
@@ -18,18 +18,18 @@ def load_data(db):
     director.roles.append(rol_dir)
 
     #Materias y comisiones
-    c1 = Comision('De 18hs a 20hs')
-    c2 = Comision('De 20hs a 22hs')
+    c1 = Comision('De 18hs a 20hs', 20)
+    c2 = Comision('De 20hs a 22hs', 40)
     m1 = Materia('Algoritmos', 4)
     m1.comisiones.append(c1)
     m1.comisiones.append(c2)
 
-    c3 = Comision('De 20hs a 22hs')
+    c3 = Comision('De 20hs a 22hs', 30)
     m2 = Materia('Arquitectura de Computadoras', 8)
     m2.comisiones.append(c3)
 
-    c4 = Comision('De 16hs a 18hs')
-    c5 = Comision('De 18hs a 20hs')
+    c4 = Comision('De 16hs a 18hs', 30)
+    c5 = Comision('De 18hs a 20hs', 40)
     m3 = Materia('Matematica 1', 1)
     m3.comisiones.append(c4)
     m3.comisiones.append(c5)
@@ -37,6 +37,9 @@ def load_data(db):
     #Oferta
     oferta = Oferta("2017s2")
     oferta.activa = True
+    oferta.materias.append(m1)
+    oferta.materias.append(m2)
+    oferta.materias.append(m3)
     db.session.add(oferta)
 
     db.session.add(rol_alu)
@@ -57,6 +60,7 @@ def load_data(db):
     encuesta = Encuesta(oferta.id, alu.id)
     encuesta.aprobadas.append(m1)
     encuesta.aprobadas.append(m2)
+    encuesta.respondida = True
     encuesta.preinscripcion.append(c5)
 
     db.session.commit()

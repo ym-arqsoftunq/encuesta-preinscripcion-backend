@@ -32,10 +32,29 @@ class Oferta(db.Model):
     def __init__(self, nombre):
         self.nombre = nombre
 
+    def activar_oferta(self):
+        self.activa = True
+
+
     def asignar_datos(self, data):
         data['oferta'] = {}
         data['oferta']['id'] = self.id
         data['oferta']['nombre'] = self.nombre
+
+    def get_resultados(self):
+        resultados = {'materias': [], 'oferta': {}, 'encuestas': {}}
+        self.asignar_datos(resultados)
+        self.asignar_datos_encuestas(resultados)
+        self.asignar_datos_materias(resultados)
+        return resultados
+
+    def asignar_datos_encuestas(self, resultados):
+        resultados['encuestas']['respondidas'] = len(list(filter(lambda encuesta: encuesta.respondida, self.encuestas)))
+        resultados['encuestas']['total'] = len(self.encuestas)
+
+    def asignar_datos_materias(self, resultados):
+        for materia in self.materias:
+            resultados['materias'].append(materia.get_resultados())
 
 class Encuesta(db.Model):
     __tablename__ = 'encuestas'
@@ -56,6 +75,9 @@ class Encuesta(db.Model):
         backref=db.backref('encuestasc', lazy=True))
     preinscripcion = db.relationship('Comision', secondary=preinscripcion, lazy='subquery',
         backref=db.backref('encuestas', lazy=True))
+    respondida = db.Column(db.Boolean, default=False)
+    modificable = db.Column(db.Boolean, default=True)
+
 
     def __init__(self, oferta_id=None, alumno_id=None):
         self.oferta_id = oferta_id
@@ -123,34 +145,33 @@ class Comision(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     descripcion = db.Column(db.String(255), nullable=False)
+    cupo = db.Column(db.Integer)
     materia_id = db.Column(db.Integer, db.ForeignKey('materias.id'))
     materia = db.relationship('Materia',
         backref=db.backref('comisiones', lazy=True))
 
-    def __init__(self, descripcion=None):
+    def __init__(self, descripcion=None, cupo=0):
         self.descripcion = descripcion
+        self.cupo = cupo
 
     def __repr__(self):
         return "Materia: %s comision: %s" % (self.materia, self.descripcion)
 
     def get_json_data(self):
         data = {}
-        data['descripcion'] = self.descripcion
-        data['id'] = self.id
+        self.asignar_datos_basicos(data)
         return data
 
-class MateriaResponse(db.Model):
-    __tablename__ = 'materiaresponses'
+    def asignar_datos_basicos(self, data):
+        data['descripcion'] = self.descripcion
+        data['id'] = self.id
+        data['cupo'] = self.cupo
 
-    id = db.Column(db.Integer, primary_key=True)
-    materia_id = db.Column(db.Integer, db.ForeignKey('materias.id'))
-    materia = db.relationship('Materia',
-        backref=db.backref('responses', lazy=True))
-    descripcion = db.Column(db.String(255), nullable=False)
-
-    def __init__(self, materia, descripcion):
-        self.materia = materia
-        self.descripcion = descripcion
+    def get_resultados(self):
+        resultados = {}
+        self.asignar_datos_basicos(resultados)
+        resultados['inscriptos'] = len(self.encuestas)
+        return resultados
 
 class Materia(db.Model):
     __tablename__ = 'materias'
@@ -158,6 +179,10 @@ class Materia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False, unique=False)
     cuatrimestre = db.Column(db.Integer, nullable=False, unique=False)
+    oferta_id = db.Column(db.Integer, db.ForeignKey('ofertas.id'),
+        nullable=False)
+    oferta = db.relationship('Oferta',
+            backref=db.backref('materias', lazy=True))
 
     def __init__(self, nombre=None, cuatrimestre=None):
         self.nombre = nombre
@@ -165,12 +190,22 @@ class Materia(db.Model):
 
     def get_json_data(self):
         data = {'comisiones':[]}
-        data['cuatrimestre'] = self.cuatrimestre
-        data['id'] = self.id
-        data['nombre'] = self.nombre
+        self.asignar_datos(data)
         for comision in self.comisiones:
             data['comisiones'].append(comision.get_json_data())
         return data
+
+    def asignar_datos_basicos(self, data):
+        data['cuatrimestre'] = self.cuatrimestre
+        data['id'] = self.id
+        data['nombre'] = self.nombre
+
+    def get_resultados(self):
+        resultado = {'resultados': []}
+        self.asignar_datos_basicos(resultado)
+        for comision in self.comisiones:
+            resultado['resultados'].append(comision.get_resultados())
+        return resultado
 
     def __repr__(self):
         return "%d" % (self.nombre)
