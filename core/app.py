@@ -50,23 +50,23 @@ def get_alumnos():
 def get_materias():
     return jsonify({'materias': materias})
 
-@app.route('/oferta/<oferta_id>/<alumno_id>', methods=['GET'])
-@login_required
-@roles_required('alumno')
-def get_encuesta(oferta_id, alumno_id):
+@app.route('/oferta/<username>', methods=['GET'])
+#@login_required
+#@roles_required('alumno')
+def get_encuesta(username):
     repo = Repository()
-    return repo.get_encuesta_alumno(oferta_id, alumno_id)
+    return repo.get_encuesta_activa(username)
 
 @app.route('/resultados/<oferta_id>', methods=['GET'])
-@login_required
-@roles_required('director')
+#@login_required
+#@roles_required('director')
 def get_resultados(oferta_id):
     repo = Repository()
     return jsonify(repo.get_resultados(oferta_id))
 
 @app.route('/preinscribir', methods=['POST'])
-@login_required
-@roles_required('alumno')
+#@login_required
+#@roles_required('alumno')
 def post_preinscribir():
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)
@@ -81,8 +81,8 @@ def load_user(user_id):
 @app.route('/login', methods=['POST'])
 def post_login():
     from models import Usuario
-    email = request.form['email']
-    password = request.form['password']
+    email = request.json['email']
+    password = request.json['password']
     repo = Repository()
     usuario = Usuario.query.filter_by(email=email).first()
     #Esto hay que sacarlo
