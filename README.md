@@ -19,9 +19,15 @@ $ . venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-Levantar servidor Unicorn
+Levantar servidor Unicorn (asi se ejecuta en Heroku) en localhost:8000
 ``` bash
 $ gunicorn --pythonpath core app:app
+
+```
+
+O levantar servidor de flask en localhost:5000
+``` bash
+$ FLASK_APP=core/app.py flask run
 
 ```
 
@@ -72,4 +78,15 @@ Debemos estar sobre el directorio core del proyecto
 ``` bash
 $ python manage.py db upgrade
 $ python fixtures.py
+```
+
+Si al ejecutar "python manage.py db upgrade" nos tira error por falta de contraseña, ponerle una al usuario postgres
+``` bash
+$ sudo -i -u postgres
+$ psql
+$ alter user postgres password 'una_password';
+```
+Y luego de poner la contraseña modificar la linea de app.py
+``` bash
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:una_password@localhost:5432/encuestas'
 ```

@@ -190,7 +190,7 @@ class Materia(db.Model):
 
     def get_json_data(self):
         data = {'comisiones':[]}
-        self.asignar_datos(data)
+        self.asignar_datos_basicos(data)
         for comision in self.comisiones:
             data['comisiones'].append(comision.get_json_data())
         return data

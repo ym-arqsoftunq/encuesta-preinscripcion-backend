@@ -53,6 +53,7 @@ class Repository(object):
             * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
         """
         from models import Materia
+        encuesta.cursables = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
             encuesta.cursables.append(materia)
