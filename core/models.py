@@ -214,11 +214,12 @@ class Materia(db.Model):
         data['nombre'] = self.nombre
 
     def get_resultados(self):
-        resultado = {'resultados': []}
+        resultado = {'resultados': [], 'aprobados': len(self.encuestas), 'cursarian': len(self.encuestasi)}
         self.asignar_datos_basicos(resultado)
         for comision in self.comisiones:
             resultado['resultados'].append(comision.get_resultados())
         return resultado
+
 
     def __repr__(self):
         return "%d" % (self.nombre)
