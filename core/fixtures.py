@@ -122,6 +122,7 @@ def load_data(db):
     db.session.add(rol_dir)
     db.session.add(alu)
     db.session.add(alu2)
+    db.session.add(alu3)
     db.session.add(alu4)
     db.session.add(director)
     # db.session.add(c1)
