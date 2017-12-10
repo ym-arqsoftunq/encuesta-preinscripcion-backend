@@ -13,6 +13,7 @@ def load_data(db):
     alu = Usuario('Juan Ignacio Yegro', 'juan.yegro', 'juan.yegro@unq.edu.ar', 'alumno')
     alu2 = Usuario('Nestor Muñoz', 'nestorgabriel2008', 'nestorgabriel2008@gmail.com', 'nestor')
     alu3 = Usuario('Nestor Muñoz 2', 'nestorgabriel2004', 'nestorgabriel2004@hotmail.com', 'nestor')
+    alu4 = Usuario('Sin Encuesta', 'sinencuesta', 'sinencuesta@unq.edu.ar', 'sinencuesta')
     director = Usuario('Director', 'director', 'director@unq.edu.ar', 'director')
 
     rol_alu = Rol('alumno')
@@ -20,6 +21,7 @@ def load_data(db):
     alu.roles.append(rol_alu)
     alu2.roles.append(rol_alu)
     alu3.roles.append(rol_alu)
+    alu4.roles.append(rol_alu)
     director.roles.append(rol_dir)
 
     #Materias y comisiones
@@ -47,9 +49,9 @@ def load_data(db):
 
     comisiones = []
     materias = []
-    
 
-    # TODO: ELIMINAR ESTA REPETICION DE CODIGO 
+
+    # TODO: ELIMINAR ESTA REPETICION DE CODIGO
     for m in materias_c1:
         c1 = Comision('De 18hs a 20hs', 20)
         db.session.add(c1)
@@ -60,7 +62,7 @@ def load_data(db):
         materia.comisiones.append(c2)
         db.session.add(materia)
         materias.append(materia)
-            
+
     for m in materias_c2:
         c1 = Comision('De 18hs a 20hs', 20)
         db.session.add(c1)
@@ -120,6 +122,7 @@ def load_data(db):
     db.session.add(rol_dir)
     db.session.add(alu)
     db.session.add(alu2)
+    db.session.add(alu4)
     db.session.add(director)
     # db.session.add(c1)
     # db.session.add(c2)

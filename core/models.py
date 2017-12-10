@@ -17,6 +17,11 @@ aprobadas = db.Table('aprobadas',
     db.Column('encuesta_id', db.Integer, ForeignKey('encuestas.id'), primary_key=True)
 )
 
+imposibilitadas = db.Table('imposibilitadas',
+    db.Column('materia_id', db.Integer, ForeignKey('materias.id'), primary_key=True),
+    db.Column('encuesta_id', db.Integer, ForeignKey('encuestas.id'), primary_key=True)
+)
+
 cursables = db.Table('cursables',
     db.Column('materia_id', db.Integer, ForeignKey('materias.id'), primary_key=True),
     db.Column('encuesta_id', db.Integer, ForeignKey('encuestas.id'), primary_key=True)
@@ -75,6 +80,8 @@ class Encuesta(db.Model):
         backref=db.backref('encuestasc', lazy=True))
     preinscripcion = db.relationship('Comision', secondary=preinscripcion, lazy='subquery',
         backref=db.backref('encuestas', lazy=True))
+    imposibilitadas = db.relationship('Materia', secondary=imposibilitadas, lazy='subquery',
+        backref=db.backref('encuestasi', lazy=True))
     respondida = db.Column(db.Boolean, default=False)
     modificable = db.Column(db.Boolean, default=True)
 
@@ -87,11 +94,13 @@ class Encuesta(db.Model):
         data = {'alumno': {},'materias_aprobadas':[],
                 'materias_cursables':[],
                 'materias_preinscripcion':[],
+                'materias_cursaria':[],
                 'oferta':{}
                 }
         self.asignar_cursables(data)
         self.asignar_aprobadas(data)
         self.asignar_preinscripcion(data)
+        self.asignar_imposibilitadas(data)
         self.oferta.asignar_datos(data)
         self.alumno.asignar_datos(data)
         return json.dumps(data)
@@ -103,6 +112,10 @@ class Encuesta(db.Model):
     def asignar_aprobadas(self, data):
         for aprobada in self.aprobadas:
             data['materias_aprobadas'].append(aprobada.get_json_data())
+
+    def asignar_imposibilitadas(self, data):
+        for materia in self.imposibilitadas:
+            data['materias_cursaria'].append(materia.get_json_data())
 
     def asignar_preinscripcion(self, data):
         for comision in self.preinscripcion:
