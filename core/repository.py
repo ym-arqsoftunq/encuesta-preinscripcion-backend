@@ -82,7 +82,8 @@ class Repository(object):
             encuesta.preinscripcion.append(comision)
 
 
-    def get_resultados(self, oferta_id):
+    def get_resultados(self):
         from models import Oferta
-        oferta = Oferta.query.filter(Oferta.id == oferta_id).first()
+        #En un principio se penso para ver resultados de muchas ofertas, pero se va a hacer solo para la activar
+        oferta = Oferta.query.filter(Oferta.activa == True).first()
         return oferta.get_resultados()
