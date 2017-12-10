@@ -53,9 +53,9 @@ def load_data(db):
 
     # TODO: ELIMINAR ESTA REPETICION DE CODIGO
     for m in materias_c1:
-        c1 = Comision('De 18hs a 20hs', 20)
+        c1 = Comision('Lunes de 18hs a 20hs', 20)
         db.session.add(c1)
-        c2 = Comision('De 20hs a 22hs', 40)
+        c2 = Comision('Martes de 20hs a 22hs', 40)
         db.session.add(c2)
         materia = Materia(m,1)
         materia.comisiones.append(c1)
@@ -64,9 +64,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c2:
-        c1 = Comision('De 18hs a 20hs', 20)
+        c1 = Comision('Miercoles de 18hs a 20hs', 20)
         db.session.add(c1)
-        c2 = Comision('De 20hs a 22hs', 40)
+        c2 = Comision('Jueves de 20hs a 22hs', 40)
         db.session.add(c2)
         materia = Materia(m,2)
         materia.comisiones.append(c1)
@@ -75,9 +75,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c3:
-        c1 = Comision('De 18hs a 20hs', 20)
+        c1 = Comision('Viernes de 18hs a 20hs', 20)
         db.session.add(c1)
-        c2 = Comision('De 20hs a 22hs', 40)
+        c2 = Comision('Sabados de 10hs a 12hs', 40)
         db.session.add(c2)
         materia = Materia(m,3)
         materia.comisiones.append(c1)
@@ -86,9 +86,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c4:
-        c1 = Comision('De 18hs a 20hs', 20)
+        c1 = Comision('Lunes de 18hs a 20hs', 20)
         db.session.add(c1)
-        c2 = Comision('De 20hs a 22hs', 40)
+        c2 = Comision('Jueves de 20hs a 22hs', 40)
         db.session.add(c2)
         materia = Materia(m,4)
         materia.comisiones.append(c1)
@@ -97,9 +97,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c5:
-        c1 = Comision('De 18hs a 20hs', 20)
+        c1 = Comision('Martes de 18hs a 20hs', 20)
         db.session.add(c1)
-        c2 = Comision('De 20hs a 22hs', 40)
+        c2 = Comision('Viernes de 20hs a 22hs', 40)
         db.session.add(c2)
         materia = Materia(m,5)
         materia.comisiones.append(c1)
