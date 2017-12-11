@@ -49,6 +49,7 @@ class Repository(object):
             * Con la encuesta ya traida de la BD, recorro el json de materias aprobadas y lo relaciono
         """
         from models import Materia
+        encuesta.aprobadas = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
             encuesta.aprobadas.append(materia)
@@ -58,6 +59,7 @@ class Repository(object):
             * Con la encuesta ya traida de la BD, recorro el json de materias imposibilitadas y lo relaciono
         """
         from models import Materia
+        encuesta.imposibilitadas = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
             encuesta.imposibilitadas.append(materia)
@@ -77,6 +79,7 @@ class Repository(object):
             * Con la encuesta ya traida de la BD, recorro el json de materias preinscripcion y lo relaciono
         """
         from models import Comision
+        encuesta.preinscripcion = []
         for data_materia in materias:
             comision = Comision.query.filter(Comision.id == data_materia['comision_seleccionada']['id']).first()
             encuesta.preinscripcion.append(comision)

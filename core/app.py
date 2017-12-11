@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a06f5714d5608fbff0781726067683e830e8bc9a8864c93ec6d865c7c5e8d@ec2-23-23-150-141.compute-1.amazonaws.com:5432/dd19u18l7o7psc'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:postgres@localhost:5432/encuestas'
 app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 db = SQLAlchemy(app)
@@ -132,9 +132,19 @@ def post_google_login():
     }
     """
     d = json.loads(j)
-    username = d['email'].split('@')[0]
+
+    from models import Usuario
+    email = d['email']
     repo = Repository()
-    return repo.get_encuesta_alumno(1, username)
+    usuario = Usuario.query.filter_by(email=email).first()
+    if usuario:
+        success = True
+        rol = usuario.roles[0].name
+    else:
+        success = False
+        rol = ''
+    return json.dumps({'success':success, 'rol': rol }), 200, {'ContentType':'application/json'}
+
 
 #LOGIN FACEBOOK
 @app.route('/facebook-login', methods=['POST'])
@@ -152,9 +162,17 @@ def post_facebook_login():
     #chequeo que no haya devuelto error
     if "name" in d and "id" in d:
         #el email me llega en el request
-        username = request.json['email'].split('@')[0]
+        from models import Usuario
+        email = request.json['email']
         repo = Repository()
-        return jsonify(repo.get_encuesta_alumno(1, username))
+        usuario = Usuario.query.filter_by(email=email).first()
+        if usuario:
+            success = True
+            rol = usuario.roles[0].name
+        else:
+            success = False
+            rol = ''
+        return json.dumps({'success':success, 'rol': rol }), 200, {'ContentType':'application/json'}
     else:
         raise Exception('No se pudo validar el token')
 
