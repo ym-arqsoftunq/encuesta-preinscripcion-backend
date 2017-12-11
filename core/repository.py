@@ -34,12 +34,19 @@ class Repository(object):
         return encuesta
 
     def crear_encuesta(self, oferta, alumno):
-        from models import Encuesta, db
+        from models import Encuesta, db, Usuario
         #Creo una encuesta para el alumno actual
         encuesta = Encuesta(oferta.id, alumno.id)
         #Recorro las materias de la oferta y las pongo en cursables
         for materia in oferta.materias:
             encuesta.cursables.append(materia)
+        #Seteo las materias aprobadas de la ultima encuesta
+        anterior = Encuesta.query.filter(Usuario.id == alumno.id).order_by(Encuesta.id.desc()).first()
+        #Si hubo una encuesta anterior...
+        if anterior:
+            #Recorro las aprobadas y se la seteo a la encuesta actual
+            for aprobada in anterior.aprobadas:
+                encuesta.aprobadas.append(materia)
         db.session.add(encuesta)
         db.session.commit()
         return encuesta
