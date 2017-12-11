@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from models import *
+from repository import Repository
+import random
 
 def clear_data(db):
     meta = db.metadata
@@ -9,15 +11,20 @@ def clear_data(db):
     session.commit()
 
 def load_data(db):
+    rol_alu = Rol('alumno')
+    rol_dir = Rol('director')
+
+
     #Alumno
+    alu_base = Usuario('Alumno', 'alumno', 'alumno@unq.edu.ar', 'alumno')
     alu = Usuario('Juan Ignacio Yegro', 'juan.yegro', 'juan.yegro@unq.edu.ar', 'alumno')
     alu2 = Usuario('Nestor Muñoz', 'nestorgabriel2008', 'nestorgabriel2008@gmail.com', 'nestor')
     alu3 = Usuario('Nestor Muñoz 2', 'nestorgabriel2004', 'nestorgabriel2004@hotmail.com', 'nestor')
     alu4 = Usuario('Sin Encuesta', 'sinencuesta', 'sinencuesta@unq.edu.ar', 'sinencuesta')
     director = Usuario('Director', 'director', 'director@unq.edu.ar', 'director')
 
-    rol_alu = Rol('alumno')
-    rol_dir = Rol('director')
+
+    alu_base.roles.append(rol_alu)
     alu.roles.append(rol_alu)
     alu2.roles.append(rol_alu)
     alu3.roles.append(rol_alu)
@@ -53,7 +60,7 @@ def load_data(db):
 
     # TODO: ELIMINAR ESTA REPETICION DE CODIGO
     for m in materias_c1:
-        c1 = Comision('Lunes de 18hs a 20hs', 20)
+        c1 = Comision('Lunes de 18hs a 20hs', 40)
         db.session.add(c1)
         c2 = Comision('Martes de 20hs a 22hs', 40)
         db.session.add(c2)
@@ -64,7 +71,7 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c2:
-        c1 = Comision('Miercoles de 18hs a 20hs', 20)
+        c1 = Comision('Miercoles de 18hs a 20hs', 30)
         db.session.add(c1)
         c2 = Comision('Jueves de 20hs a 22hs', 40)
         db.session.add(c2)
@@ -75,9 +82,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c3:
-        c1 = Comision('Viernes de 18hs a 20hs', 20)
+        c1 = Comision('Viernes de 18hs a 20hs', 50)
         db.session.add(c1)
-        c2 = Comision('Sabados de 10hs a 12hs', 40)
+        c2 = Comision('Sabados de 10hs a 12hs', 30)
         db.session.add(c2)
         materia = Materia(m,3)
         materia.comisiones.append(c1)
@@ -86,7 +93,7 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c4:
-        c1 = Comision('Lunes de 18hs a 20hs', 20)
+        c1 = Comision('Lunes de 18hs a 20hs', 30)
         db.session.add(c1)
         c2 = Comision('Jueves de 20hs a 22hs', 40)
         db.session.add(c2)
@@ -97,9 +104,9 @@ def load_data(db):
         materias.append(materia)
 
     for m in materias_c5:
-        c1 = Comision('Martes de 18hs a 20hs', 20)
+        c1 = Comision('Martes de 18hs a 20hs', 40)
         db.session.add(c1)
-        c2 = Comision('Viernes de 20hs a 22hs', 40)
+        c2 = Comision('Viernes de 20hs a 22hs', 50)
         db.session.add(c2)
         materia = Materia(m,5)
         materia.comisiones.append(c1)
@@ -150,6 +157,41 @@ def load_data(db):
     encuesta2 = Encuesta(oferta.id, alu2.id)
     for m in materias:
         encuesta2.cursables.append(m)
+    encuesta2.preinscripcion.append(c1)
+    encuesta3 = Encuesta(oferta.id, alu_base.id)
+    for m in materias:
+        encuesta3.cursables.append(m)
+    encuesta3.preinscripcion.append(c1)
+    encuesta4 = Encuesta(oferta.id, alu3.id)
+    for m in materias:
+        encuesta4.cursables.append(m)
+    encuesta4.preinscripcion.append(c1)
+    encuesta4.contestada = True
+    repo = Repository()
+    letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+        's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    posible_respondida = [True, False]
+    #Creo 200 alumnos aleatorios
+    for i in range(300):
+        nombre = ''
+        for j in range(15):
+            nombre += letras[random.randint(0, 25)]
+        alumno = Usuario(nombre, nombre, nombre+'@unq.edu.ar', nombre)
+        alumno.roles.append(rol_alu)
+        db.session.add(alumno)
+        db.session.commit()
+        encuesta = repo.crear_encuesta(oferta, alumno)
+        #Hago aleatorio si la respondio o no
+        respondida = posible_respondida[random.randint(0, 1)]
+        if respondida:
+            encuesta.respondida = True
+            materias_anotadas = []
+            for h in range(0, 4):
+                materia_random = materias[random.randint(0, 16)]
+                if materia_random not in materias_anotadas:
+                    encuesta.preinscripcion.append(materia_random.comisiones[0])
+                    materias_anotadas.append(materia_random)
+        db.session.add(encuesta)
 
     db.session.commit()
 
