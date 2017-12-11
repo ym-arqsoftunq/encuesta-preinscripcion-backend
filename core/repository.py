@@ -89,4 +89,5 @@ class Repository(object):
         from models import Oferta
         #En un principio se penso para ver resultados de muchas ofertas, pero se va a hacer solo para la activar
         oferta = Oferta.query.filter(Oferta.activa == True).first()
-        return oferta.get_resultados()
+        resultados = oferta.get_resultados()
+        return resultados

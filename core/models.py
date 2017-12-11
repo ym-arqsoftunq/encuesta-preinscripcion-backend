@@ -170,6 +170,11 @@ class Comision(db.Model):
     def __repr__(self):
         return "Materia: %s comision: %s" % (self.materia, self.descripcion)
 
+    def problema_de_cupo(self):
+        #Si el cupo supera el 90%, entonces hay problema de cupo
+        anotados = len(self.encuestas)
+        return (anotados * 100 / self.cupo) >= 90
+
     def get_json_data(self):
         data = {}
         self.asignar_datos_basicos(data)
@@ -214,9 +219,11 @@ class Materia(db.Model):
         data['nombre'] = self.nombre
 
     def get_resultados(self):
-        resultado = {'resultados': [], 'aprobados': len(self.encuestas), 'cursarian': len(self.encuestasi)}
+        resultado = {'resultados': [], 'aprobados': len(self.encuestas), 'cursarian': len(self.encuestasi),
+        'problema_de_cupo': False}
         self.asignar_datos_basicos(resultado)
         for comision in self.comisiones:
+            resultado['problema_de_cupo'] = comision.problema_de_cupo() or resultado['problema_de_cupo']
             resultado['resultados'].append(comision.get_resultados())
         return resultado
 
