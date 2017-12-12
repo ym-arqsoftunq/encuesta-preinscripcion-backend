@@ -21,7 +21,9 @@ def load_data(db):
     alu2 = Usuario('Nestor Muñoz', 'nestorgabriel2008', 'nestorgabriel2008@gmail.com', 'nestor')
     alu3 = Usuario('Nestor Muñoz 2', 'nestorgabriel2004', 'nestorgabriel2004@hotmail.com', 'nestor')
     alu4 = Usuario('Sin Encuesta', 'sinencuesta', 'sinencuesta@unq.edu.ar', 'sinencuesta')
+    alu5 = Usuario('Claudio Fernandez', 'claudiof', 'claudiof@gmail.com', 'claudio')
     director = Usuario('Director', 'director', 'director@unq.edu.ar', 'director')
+    director2 = Usuario('Leonardo Volinier', 'leonardo.volinier', 'leonardo.volinier@gmail.com', 'leonardo')
 
 
     alu_base.roles.append(rol_alu)
@@ -29,7 +31,9 @@ def load_data(db):
     alu2.roles.append(rol_alu)
     alu3.roles.append(rol_alu)
     alu4.roles.append(rol_alu)
+    alu5.roles.append(rol_alu)
     director.roles.append(rol_dir)
+    director2.roles.append(rol_dir)
 
     #Materias y comisiones
     # c1 = Comision('De 18hs a 20hs', 20)
@@ -131,7 +135,9 @@ def load_data(db):
     db.session.add(alu2)
     db.session.add(alu3)
     db.session.add(alu4)
+    db.session.add(alu5)
     db.session.add(director)
+    db.session.add(director2)
     # db.session.add(c1)
     # db.session.add(c2)
     # db.session.add(m1)
