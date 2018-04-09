@@ -101,3 +101,23 @@ class Repository(object):
         oferta = Oferta.query.filter(Oferta.activa == True).first()
         resultados = oferta.get_resultados()
         return resultados
+
+    def get_materias(self):
+        from models import Materia
+        materias = Materia.query.all()
+        r = []
+        for m in materias:
+            r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id})
+        return r
+
+    def get_usuarios(self):
+        from models import Usuario
+        usuarios = Usuario.query.all()
+        r = []
+        for u in usuarios:
+            roles = []
+            for rol in u.roles:
+                roles.append({'id': rol.id, 'name': rol.name})
+            r.append({'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,
+                'password': u.password, 'roles': roles})
+        return r

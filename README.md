@@ -30,6 +30,10 @@ O levantar servidor de flask en localhost:5000
 $ FLASK_APP=core/app.py flask run
 
 ```
+Para modo debug (ver errores en navegador y consola), antes de levantar el server con flask run, ejecutar
+``` bash
+$ export FLASK_DEBUG=1
+```
 
 Tests
 

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 import os
 import json
@@ -12,14 +12,14 @@ from flask.ext.script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import roles_required, SQLAlchemyAdapter, UserManager
 from flask_login import login_user, LoginManager, login_required, logout_user
-
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a06f5714d5608fbff0781726067683e830e8bc9a8864c93ec6d865c7c5e8d@ec2-23-23-150-141.compute-1.amazonaws.com:5432/dd19u18l7o7psc'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a06f5714d5608fbff0781726067683e830e8bc9a8864c93ec6d865c7c5e8d@ec2-23-23-150-141.compute-1.amazonaws.com:5432/dd19u18l7o7psc'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:postgres@localhost:5432/encuestas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:postgres@localhost:5432/encuestas'
 app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 db = SQLAlchemy(app)
 db.init_app(app)
@@ -42,17 +42,37 @@ def initdb_command():
     init_db()
     print('Initialized the database.')
 
-@app.route('/alumnos', methods=['GET'])
-def get_alumnos():
-    return jsonify({'alumnos': alumnos})
+# HTTP AUTHENTICATION
+# https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
+
+auth = HTTPBasicAuth()
+
+@auth.get_password
+def get_password(username):
+    from models import Usuario
+    # la password retornada debe coincidir con la que me llega en el request
+    return Usuario.query.filter_by(username=username).first().password
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
+# API REST
+
+@app.route('/usuarios', methods=['GET'])
+@auth.login_required
+def get_usuarios():
+    repo = Repository()
+    return jsonify({'usuarios': repo.get_usuarios()})
 
 @app.route('/materias', methods=['GET'])
+@auth.login_required
 def get_materias():
-    return jsonify({'materias': materias})
+    repo = Repository()
+    return jsonify({'materias': repo.get_materias()})
 
 @app.route('/oferta/<username>', methods=['GET'])
-#@login_required
-#@roles_required('alumno')
+@auth.login_required
 def get_encuesta(username):
     try:
         repo = Repository()
@@ -61,15 +81,13 @@ def get_encuesta(username):
         return jsonify({'error': str(e)}),501
 
 @app.route('/resultados', methods=['GET'])
-#@login_required
-#@roles_required('director')
+@auth.login_required
 def get_resultados():
     repo = Repository()
     return json.dumps(repo.get_resultados())
 
 @app.route('/preinscribir', methods=['POST'])
-#@login_required
-#@roles_required('alumno')
+@auth.login_required
 def post_preinscribir():
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)

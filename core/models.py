@@ -229,7 +229,7 @@ class Materia(db.Model):
 
 
     def __repr__(self):
-        return "%d" % (self.nombre)
+        return "%s" % (self.nombre)
 
 class Rol(db.Model):
     __tablename__ = 'roles'
