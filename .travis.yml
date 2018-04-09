@@ -4,7 +4,7 @@ branches:
     - master
 deploy:
   provider: heroku
-  api_key: ffac8c94-3488-4db2-8302-b14e7b731efd
+  api_key: c6efefcf-08ef-4271-aa6f-757ba235d957
   app: encuesta-preinscripcion-bknd
 
 install:
