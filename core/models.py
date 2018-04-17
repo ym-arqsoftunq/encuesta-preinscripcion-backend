@@ -103,7 +103,7 @@ class Encuesta(db.Model):
         self.asignar_imposibilitadas(data)
         self.oferta.asignar_datos(data)
         self.alumno.asignar_datos(data)
-        return json.dumps(data)
+        return data
 
     def asignar_cursables(self, data):
         for cursable in self.cursables:

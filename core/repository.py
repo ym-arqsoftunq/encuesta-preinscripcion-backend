@@ -27,6 +27,8 @@ class Repository(object):
         from models import Encuesta, Usuario, Oferta
         #TODO: Catchear una posible excepcion
         alumno = Usuario.query.filter_by(username=username).first()
+        if alumno is None:
+            raise Exception('El usuario ' + username + ' no existe')
         oferta_activa = Oferta.query.filter_by(activa=True).first()
         encuesta = Encuesta.query.filter_by(oferta_id=oferta_activa.id, alumno_id=alumno.id).first()
         if not encuesta:
@@ -110,6 +112,22 @@ class Repository(object):
             r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id})
         return r
 
+    def get_materia_por_nombre(self,nombre):
+        from models import Materia
+        m = Materia.query.filter_by(nombre=nombre).first()
+        if m is None:
+            return None
+        else:
+            return {'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id}
+
+    def get_materias_de_oferta(self,oferta_id):
+        from models import Materia
+        materias = Materia.query.filter_by(oferta_id=oferta_id).all()
+        r = []
+        for m in materias:
+            r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id})
+        return r
+
     def get_usuarios(self):
         from models import Usuario
         usuarios = Usuario.query.all()
@@ -118,6 +136,29 @@ class Repository(object):
             roles = []
             for rol in u.roles:
                 roles.append({'id': rol.id, 'name': rol.name})
-            r.append({'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,
-                'password': u.password, 'roles': roles})
+            r.append({'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,'roles': roles})
         return r
+
+    def get_usuario_por_username(self,username):
+        from models import Usuario
+        u = Usuario.query.filter_by(username=username).first()
+        if u is None:
+            return None
+        else:
+            roles = []
+            for rol in u.roles:
+                roles.append({'id': rol.id, 'name': rol.name})
+            return {'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,'roles': roles}
+
+    def get_oferta(self,id):
+        from models import Oferta
+        oferta = Oferta.query.filter_by(id=id).first()
+        if oferta is None:
+            return None
+        else:
+            return {
+                'id': oferta.id,
+                'nombre': oferta.nombre,
+                'activa': oferta.activa,
+                'materias': self.get_materias_de_oferta(oferta.id)
+            }
