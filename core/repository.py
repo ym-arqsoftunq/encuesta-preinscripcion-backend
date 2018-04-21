@@ -1,4 +1,5 @@
 import os
+from models import Usuario
 
 class Repository(object):
 
@@ -7,7 +8,6 @@ class Repository(object):
         return encuesta.get_json_data()
 
     def guardar_encuesta_alumno(self, data):
-        from models import db
         oferta_id = data['oferta']['id']
         username = data['alumno']['username']
         encuesta = self.buscar_encuesta_alumno(username)
@@ -24,7 +24,6 @@ class Repository(object):
             * Si existe, la traigo
             * Sino, la creo
         """
-        from models import Encuesta, Usuario, Oferta
         #TODO: Catchear una posible excepcion
         alumno = Usuario.query.filter_by(username=username).first()
         if alumno is None:
@@ -36,7 +35,6 @@ class Repository(object):
         return encuesta
 
     def crear_encuesta(self, oferta, alumno):
-        from models import Encuesta, db, Usuario, Materia
         #Creo una encuesta para el alumno actual
         encuesta = Encuesta(oferta.id, alumno.id)
         #Recorro las materias de la oferta y las pongo en cursables
@@ -60,7 +58,6 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias aprobadas y lo relaciono
         """
-        from models import Materia
         encuesta.aprobadas = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
@@ -70,7 +67,6 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias imposibilitadas y lo relaciono
         """
-        from models import Materia
         encuesta.imposibilitadas = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
@@ -80,7 +76,6 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias cursables y lo relaciono
         """
-        from models import Materia
         encuesta.cursables = []
         for data_materia in materias:
             materia = Materia.query.filter(Materia.id == data_materia['id']).first()
@@ -90,7 +85,6 @@ class Repository(object):
         """
             * Con la encuesta ya traida de la BD, recorro el json de materias preinscripcion y lo relaciono
         """
-        from models import Comision
         encuesta.preinscripcion = []
         for data_materia in materias:
             comision = Comision.query.filter(Comision.id == data_materia['comision_seleccionada']['id']).first()
@@ -98,14 +92,12 @@ class Repository(object):
 
 
     def get_resultados(self):
-        from models import Oferta
         #En un principio se penso para ver resultados de muchas ofertas, pero se va a hacer solo para la activar
         oferta = Oferta.query.filter(Oferta.activa == True).first()
         resultados = oferta.get_resultados()
         return resultados
 
     def get_materias(self):
-        from models import Materia
         materias = Materia.query.all()
         r = []
         for m in materias:
@@ -113,7 +105,6 @@ class Repository(object):
         return r
 
     def get_materia_por_nombre(self,nombre):
-        from models import Materia
         m = Materia.query.filter_by(nombre=nombre).first()
         if m is None:
             return None
@@ -121,7 +112,6 @@ class Repository(object):
             return {'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id}
 
     def get_materias_de_oferta(self,oferta_id):
-        from models import Materia
         materias = Materia.query.filter_by(oferta_id=oferta_id).all()
         r = []
         for m in materias:
@@ -129,7 +119,6 @@ class Repository(object):
         return r
 
     def get_usuarios(self):
-        from models import Usuario
         usuarios = Usuario.query.all()
         r = []
         for u in usuarios:
@@ -140,7 +129,6 @@ class Repository(object):
         return r
 
     def get_usuario_por_username(self,username):
-        from models import Usuario
         u = Usuario.query.filter_by(username=username).first()
         if u is None:
             return None
@@ -151,7 +139,6 @@ class Repository(object):
             return {'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,'roles': roles}
 
     def get_oferta(self,id):
-        from models import Oferta
         oferta = Oferta.query.filter_by(id=id).first()
         if oferta is None:
             return None

@@ -3,7 +3,6 @@ from flask_cors import CORS
 import os
 import json
 import requests
-from repository import Repository
 from flask_cli import FlaskCLI
 from flask_alembic import Alembic
 from flask_migrate import Migrate
@@ -13,12 +12,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_user import roles_required, SQLAlchemyAdapter, UserManager
 from flask_login import login_user, LoginManager, login_required, logout_user
 
+from repository import Repository
+
+from config import app
+
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import reqparse, Api, Resource
 from flask_restful_swagger import swagger
-
-
-app = Flask(__name__)
 
 ###################################
 # wrapeo la app para swagger
@@ -30,12 +30,7 @@ api = swagger.docs(Api(app), apiVersion='0.1',
                    description='API de encuesta de preinscripcion')
 ###################################
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a06f5714d5608fbff0781726067683e830e8bc9a8864c93ec6d865c7c5e8d@ec2-23-23-150-141.compute-1.amazonaws.com:5432/dd19u18l7o7psc'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:postgres@localhost:5432/encuestas'
-app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 db = SQLAlchemy(app)
 db.init_app(app)
 
@@ -64,7 +59,6 @@ def initdb_command():
 
 @app.route('/login', methods=['POST'])
 def post_login():
-    from models import Usuario
     email = request.json['email']
     password = request.json['password']
     repo = Repository()
@@ -113,8 +107,6 @@ def post_google_login():
     }
     """
     d = json.loads(j)
-
-    from models import Usuario
     email = d['email']
     repo = Repository()
     usuario = Usuario.query.filter_by(email=email).first()
@@ -143,7 +135,6 @@ def post_facebook_login():
     #chequeo que no haya devuelto error
     if "name" in d and "id" in d:
         #el email me llega en el request
-        from models import Usuario
         email = request.json['email']
         repo = Repository()
         usuario = Usuario.query.filter_by(email=email).first()
@@ -172,7 +163,6 @@ parser.add_argument('nombre', type=str)
 
 @auth.get_password
 def get_password(username):
-    from models import Usuario
     # la password retornada debe coincidir con la que me llega en el request
     usuario = Usuario.query.filter_by(username=username).first()
     if usuario:
@@ -209,8 +199,8 @@ class Usuario(Resource):
         "paramType": "path"
       }
     ])
+  @auth.login_required
   def get(self,id):
-    from models import Usuario
     usuario = Usuario.query.filter_by(id=id).first()
     if usuario is None:
         return None
@@ -224,9 +214,6 @@ class Usuario(Resource):
         }, 200, {'Access-Control-Allow-Origin': '*'}
 
 class Usuarios(Resource):
-  decorators = [
-    auth.login_required
-  ]
 
   @swagger.operation(
     notes='Retorna todos los usuarios registrados',
@@ -242,10 +229,10 @@ class Usuarios(Resource):
     ])
   def get(self):
     repo = Repository()
-    args = parser.parse_args()
-    #return args
-    if 'username' in args:
-        return repo.get_usuario_por_username(args['username']), 200, {'Access-Control-Allow-Origin': '*'}
+    argumentos = parser.parse_args()
+    #Si viene 'username' y trae algun dato
+    if 'username' in argumentos and argumentos['username']:
+        return repo.get_usuario_por_username(argumentos['username']), 200, {'Access-Control-Allow-Origin': '*'}
     else:
         return repo.get_usuarios(), 200, {'Access-Control-Allow-Origin': '*'}
 
@@ -274,7 +261,6 @@ class Materia(Resource):
       }
     ])
   def get(self,id):
-    from models import Materia
     materia = Materia.query.filter_by(id=id).first()
     if materia is None:
         return None
@@ -287,9 +273,6 @@ class Materia(Resource):
         }, 200, {'Access-Control-Allow-Origin': '*'}
 
 class Materias(Resource):
-  decorators = [
-    auth.login_required
-  ]
 
   @swagger.operation(
     notes='Busca materias por nombre, si no se ingresa nombre retorna todas',
@@ -303,6 +286,8 @@ class Materias(Resource):
         "paramType": 'query'
       }
     ])
+
+  @auth.login_required
   def get(self):
     repo = Repository()
     args = parser.parse_args()
@@ -339,6 +324,8 @@ class Oferta(Resource):
         "paramType": "path"
       }
     ])
+
+  @auth.login_required
   def get(self,id):
     repo = Repository()
     oferta = repo.get_oferta(id)
@@ -363,6 +350,8 @@ class Encuesta(Resource):
         "paramType": "path"
       }
     ])
+
+  @auth.login_required
   def get(self,username):
     repo = Repository()
     try:
@@ -394,4 +383,4 @@ api.add_resource(Oferta, '/oferta/<int:id>')
 api.add_resource(Encuesta, '/encuesta/<string:username>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
