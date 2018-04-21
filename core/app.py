@@ -227,6 +227,7 @@ class Usuarios(Resource):
         "paramType": 'query'
       }
     ])
+  @auth.login_required
   def get(self):
     repo = Repository()
     argumentos = parser.parse_args()
