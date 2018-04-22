@@ -200,6 +200,7 @@ class UsuarioResource(Resource):
         "paramType": "path"
       }
     ])
+  @auth.login_required
   def get(self,id):
     usuario = Usuario.query.filter_by(id=id).first()
     if usuario is None:
@@ -227,6 +228,7 @@ class UsuariosResource(Resource):
         "paramType": 'query'
       }
     ])
+  @auth.login_required
   def get(self):
     repo = Repository()
     argumentos = parser.parse_args()
@@ -260,6 +262,7 @@ class MateriaResource(Resource):
         "paramType": "path"
       }
     ])
+  @auth.login_required
   def get(self,id):
     materia = Materia.query.filter_by(id=id).first()
     if materia is None:
@@ -286,7 +289,7 @@ class MateriasResource(Resource):
         "paramType": 'query'
       }
     ])
-
+  @auth.login_required
   def get(self):
     repo = Repository()
     args = parser.parse_args()
