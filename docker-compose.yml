@@ -1,0 +1,14 @@
+#Docker compose version
+version: '2.1'
+services:
+  encuesta-preinscripcion-backend:
+    #Que siempre haga restart cuando falle
+    restart: always
+    #Que haga build en el directorio actual
+    build: .
+    #Los puertos que va a usar
+    ports:
+      - 5000:5000
+    #El directorio que va a actualizar cuando vea cambios
+    volumes:
+      - .:/app
