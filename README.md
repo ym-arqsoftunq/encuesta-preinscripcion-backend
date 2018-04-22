@@ -2,8 +2,18 @@
 
 > Un proyecto Flask
 
-## Instalacion
-Con virtualenv:
+## Build con Docker
+
+``` base
+# Instalar docker
+$ sudo apt-get install docker
+# Instanciar el contenedor
+$ docker-compose build
+# Correr el contenedor
+$ docker-compose up -d
+```
+
+## Instalacion con virtualenv
 
 ``` bash
 # Instalar virtualenv (en Ubuntu)
