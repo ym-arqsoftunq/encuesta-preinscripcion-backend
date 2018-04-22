@@ -4,7 +4,7 @@
 
 ## Build con Docker
 
-``` base
+``` bash
 # Instalar docker
 $ sudo apt-get install docker
 # Instanciar el contenedor
