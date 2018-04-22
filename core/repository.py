@@ -1,5 +1,5 @@
 import os
-from models import Usuario
+from models import Usuario, Materia
 
 class Repository(object):
 

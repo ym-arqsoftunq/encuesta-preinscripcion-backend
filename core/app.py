@@ -13,6 +13,7 @@ from flask_user import roles_required, SQLAlchemyAdapter, UserManager
 from flask_login import login_user, LoginManager, login_required, logout_user
 
 from repository import Repository
+from models import Materia, Usuario
 
 from config import app
 
@@ -183,7 +184,7 @@ def get_usuarios():
     return jsonify({'usuarios': repo.get_usuarios()})
     '''
 
-class Usuario(Resource):
+class UsuarioResource(Resource):
   "API DE USUARIOS"
 
   @swagger.operation(
@@ -199,7 +200,6 @@ class Usuario(Resource):
         "paramType": "path"
       }
     ])
-  @auth.login_required
   def get(self,id):
     usuario = Usuario.query.filter_by(id=id).first()
     if usuario is None:
@@ -213,7 +213,7 @@ class Usuario(Resource):
             'roles': map(lambda r: r.name, usuario.roles)
         }, 200, {'Access-Control-Allow-Origin': '*'}
 
-class Usuarios(Resource):
+class UsuariosResource(Resource):
 
   @swagger.operation(
     notes='Retorna todos los usuarios registrados',
@@ -227,7 +227,6 @@ class Usuarios(Resource):
         "paramType": 'query'
       }
     ])
-  @auth.login_required
   def get(self):
     repo = Repository()
     argumentos = parser.parse_args()
@@ -245,7 +244,7 @@ def get_materias():
     return jsonify({'materias': repo.get_materias()})
 '''
 
-class Materia(Resource):
+class MateriaResource(Resource):
   "API DE MATERIAS"
 
   @swagger.operation(
@@ -273,7 +272,7 @@ class Materia(Resource):
             'oferta_id': materia.oferta_id,
         }, 200, {'Access-Control-Allow-Origin': '*'}
 
-class Materias(Resource):
+class MateriasResource(Resource):
 
   @swagger.operation(
     notes='Busca materias por nombre, si no se ingresa nombre retorna todas',
@@ -288,12 +287,11 @@ class Materias(Resource):
       }
     ])
 
-  @auth.login_required
   def get(self):
     repo = Repository()
     args = parser.parse_args()
     #return args
-    if 'nombre' in args:
+    if 'nombre' in args and args['nombre']:
         return repo.get_materia_por_nombre(args['nombre']), 200, {'Access-Control-Allow-Origin': '*'}
     else:
         return repo.get_materias(), 200, {'Access-Control-Allow-Origin': '*'}
@@ -309,7 +307,7 @@ def get_encuesta(username):
         return jsonify({'error': str(e)}),501
 '''
 
-class Oferta(Resource):
+class OfertaResource(Resource):
   "API DE OFERTAS"
 
   @swagger.operation(
@@ -335,7 +333,7 @@ class Oferta(Resource):
     else:
         return oferta, 200, {'Access-Control-Allow-Origin': '*'}
 
-class Encuesta(Resource):
+class EncuestaResource(Resource):
   "API DE ENCUESTAS"
 
   @swagger.operation(
@@ -376,12 +374,12 @@ def post_preinscribir():
     repo.guardar_encuesta_alumno(request.json)
     return 'OK'
 
-api.add_resource(Usuarios, '/usuarios')
-api.add_resource(Usuario, '/usuarios/<int:id>')
-api.add_resource(Materias, '/materias')
-api.add_resource(Materia, '/materias/<int:id>')
-api.add_resource(Oferta, '/oferta/<int:id>')
-api.add_resource(Encuesta, '/encuesta/<string:username>')
+api.add_resource(UsuariosResource, '/usuarios')
+api.add_resource(UsuarioResource, '/usuarios/<int:id>')
+api.add_resource(MateriasResource, '/materias')
+api.add_resource(MateriaResource, '/materias/<int:id>')
+api.add_resource(OfertaResource, '/oferta/<int:id>')
+api.add_resource(EncuestaResource, '/encuesta/<string:username>')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
