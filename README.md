@@ -10,9 +10,9 @@ $ sudo apt-get install docker.io
 # Instalar docker-compose
 $ sudo apt install docker-compose
 # Instanciar el contenedor
-$ docker-compose build
+$ sudo docker-compose build
 # Correr el contenedor
-$ docker-compose up -d
+$ sudo docker-compose up -d
 ```
 
 ## Instalacion con virtualenv
