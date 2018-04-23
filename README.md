@@ -6,7 +6,9 @@
 
 ``` bash
 # Instalar docker
-$ sudo apt-get install docker
+$ sudo apt-get install docker.io
+# Instalar docker-compose
+$ sudo apt install docker-compose
 # Instanciar el contenedor
 $ docker-compose build
 # Correr el contenedor
