@@ -106,3 +106,7 @@ Y luego de poner la contraseña modificar la linea de app.py
 ``` bash
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:una_password@localhost:5432/encuestas'
 ```
+
+### Swagger UI
+
+Con la app levantada dirigirse a http://localhost:5000/api/spec.html
