@@ -1,5 +1,5 @@
 import os
-from models import Usuario, Materia
+from models import Usuario, Materia, Oferta, Encuesta, Comision, db
 
 class Repository(object):
 

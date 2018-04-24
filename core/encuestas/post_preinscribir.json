@@ -1,0 +1,275 @@
+{
+	"alumno": {
+		"id": 333,
+		"nombre": "Nestor Muñoz",
+		"username": "nestorgabriel2008"
+	},
+	"materias_aprobadas": [],
+	"materias_preinscripcion": [{
+		"comision_seleccionada": {
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 174
+		},
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 174
+		}, {
+			"cupo": 50,
+			"descripcion": "Viernes de 20hs a 22hs",
+			"id": 175
+		}],
+		"cuatrimestre": 5,
+		"id": 90,
+		"nombre": "Laboratorio de sistemas operativos y redes"
+	}
+,
+{
+	"comision_seleccionada": {
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 142
+		},
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 142
+		}, {
+			"cupo": 40,
+			"descripcion": "Martes de 20hs a 22hs",
+			"id": 143
+		}],
+		"cuatrimestre": 1,
+		"id": 74,
+		"nombre": "Introduccion a la programacion"
+	}
+],
+	"materias_cursaria": [],
+	"materias_cursables": [{
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 142
+		}, {
+			"cupo": 40,
+			"descripcion": "Martes de 20hs a 22hs",
+			"id": 143
+		}],
+		"cuatrimestre": 1,
+		"id": 74,
+		"nombre": "Introduccion a la programacion"
+	}, {
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 144
+		}, {
+			"cupo": 40,
+			"descripcion": "Martes de 20hs a 22hs",
+			"id": 145
+		}],
+		"cuatrimestre": 1,
+		"id": 75,
+		"nombre": "Matematica 1"
+	}, {
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 146
+		}, {
+			"cupo": 40,
+			"descripcion": "Martes de 20hs a 22hs",
+			"id": 147
+		}],
+		"cuatrimestre": 1,
+		"id": 76,
+		"nombre": "Organizacion de computadoras"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Miercoles de 18hs a 20hs",
+			"id": 148
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 149
+		}],
+		"cuatrimestre": 2,
+		"id": 77,
+		"nombre": "Programacion con objetos 1"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Miercoles de 18hs a 20hs",
+			"id": 150
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 151
+		}],
+		"cuatrimestre": 2,
+		"id": 78,
+		"nombre": "Estructuras de datos"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Miercoles de 18hs a 20hs",
+			"id": 152
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 153
+		}],
+		"cuatrimestre": 2,
+		"id": 79,
+		"nombre": "Bases de datos"
+	}, {
+		"comisiones": [{
+			"cupo": 50,
+			"descripcion": "Viernes de 18hs a 20hs",
+			"id": 154
+		}, {
+			"cupo": 30,
+			"descripcion": "Sabados de 10hs a 12hs",
+			"id": 155
+		}],
+		"cuatrimestre": 3,
+		"id": 80,
+		"nombre": "Matematica 2"
+	}, {
+		"comisiones": [{
+			"cupo": 50,
+			"descripcion": "Viernes de 18hs a 20hs",
+			"id": 156
+		}, {
+			"cupo": 30,
+			"descripcion": "Sabados de 10hs a 12hs",
+			"id": 157
+		}],
+		"cuatrimestre": 3,
+		"id": 81,
+		"nombre": "Programacion con objetos 2"
+	}, {
+		"comisiones": [{
+			"cupo": 50,
+			"descripcion": "Viernes de 18hs a 20hs",
+			"id": 158
+		}, {
+			"cupo": 30,
+			"descripcion": "Sabados de 10hs a 12hs",
+			"id": 159
+		}],
+		"cuatrimestre": 3,
+		"id": 82,
+		"nombre": "Sistemas operativos"
+	}, {
+		"comisiones": [{
+			"cupo": 50,
+			"descripcion": "Viernes de 18hs a 20hs",
+			"id": 160
+		}, {
+			"cupo": 30,
+			"descripcion": "Sabados de 10hs a 12hs",
+			"id": 161
+		}],
+		"cuatrimestre": 3,
+		"id": 83,
+		"nombre": "Redes de computadoras"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 162
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 163
+		}],
+		"cuatrimestre": 4,
+		"id": 84,
+		"nombre": "Estrategias de persistencia"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 164
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 165
+		}],
+		"cuatrimestre": 4,
+		"id": 85,
+		"nombre": "Construccion de interfaces de usuario"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 166
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 167
+		}],
+		"cuatrimestre": 4,
+		"id": 86,
+		"nombre": "Elementos de ingenieria de software"
+	}, {
+		"comisiones": [{
+			"cupo": 30,
+			"descripcion": "Lunes de 18hs a 20hs",
+			"id": 168
+		}, {
+			"cupo": 40,
+			"descripcion": "Jueves de 20hs a 22hs",
+			"id": 169
+		}],
+		"cuatrimestre": 4,
+		"id": 87,
+		"nombre": "Programacion concurrente"
+	}, {
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 170
+		}, {
+			"cupo": 50,
+			"descripcion": "Viernes de 20hs a 22hs",
+			"id": 171
+		}],
+		"cuatrimestre": 5,
+		"id": 88,
+		"nombre": "Desarrollo de aplicaciones"
+	}, {
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 172
+		}, {
+			"cupo": 50,
+			"descripcion": "Viernes de 20hs a 22hs",
+			"id": 173
+		}],
+		"cuatrimestre": 5,
+		"id": 89,
+		"nombre": "Programacion funcional"
+	}, {
+		"comisiones": [{
+			"cupo": 40,
+			"descripcion": "Martes de 18hs a 20hs",
+			"id": 174
+		}, {
+			"cupo": 50,
+			"descripcion": "Viernes de 20hs a 22hs",
+			"id": 175
+		}],
+		"cuatrimestre": 5,
+		"id": 90,
+		"nombre": "Laboratorio de sistemas operativos y redes"
+	}],
+	"oferta": {
+		"id": 7,
+		"nombre": "2017s2"
+	}
+}

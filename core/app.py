@@ -4,13 +4,7 @@ import os
 import json
 import requests
 from flask_cli import FlaskCLI
-from flask_alembic import Alembic
-from flask_migrate import Migrate
-from flask.ext.migrate import MigrateCommand
-from flask.ext.script import Manager
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import roles_required, SQLAlchemyAdapter, UserManager
-from flask_login import login_user, LoginManager, login_required, logout_user
 
 from repository import Repository
 from models import Materia, Usuario
@@ -36,12 +30,6 @@ db = SQLAlchemy(app)
 db.init_app(app)
 
 
-db_adapter = SQLAlchemyAdapter(db,  'models.Usuario')
-user_manager = UserManager(db_adapter, app)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 FlaskCLI(app)
 @app.shell_context_processor
 def ctx():
@@ -65,7 +53,7 @@ def post_login():
     repo = Repository()
     usuario = Usuario.query.filter_by(email=email).first()
     #Esto hay que sacarlo
-    if usuario and usuario.password == password and login_user(usuario):
+    if usuario and usuario.password == password:
         success = True
         rol = usuario.roles[0].name
     else:
@@ -73,11 +61,6 @@ def post_login():
         rol = ''
     return json.dumps({'success':success, 'rol': rol }), 200, {'ContentType':'application/json'}
 
-@app.route('/logout', methods=['GET'])
-@login_required
-def logout():
-    success = logout_user()
-    return json.dumps({'success':success}), 200, {'ContentType':'application/json'}
 
 
 #LOGIN GOOGLE
@@ -175,15 +158,6 @@ def get_password(username):
 def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
-
-'''
-@app.route('/usuarios', methods=['GET'])
-@auth.login_required
-def get_usuarios():
-    repo = Repository()
-    return jsonify({'usuarios': repo.get_usuarios()})
-    '''
-
 class UsuarioResource(Resource):
   "API DE USUARIOS"
 
@@ -238,13 +212,6 @@ class UsuariosResource(Resource):
     else:
         return repo.get_usuarios(), 200, {'Access-Control-Allow-Origin': '*'}
 
-'''
-@app.route('/materias', methods=['GET'])
-@auth.login_required
-def get_materias():
-    repo = Repository()
-    return jsonify({'materias': repo.get_materias()})
-'''
 
 class MateriaResource(Resource):
   "API DE MATERIAS"
@@ -299,16 +266,6 @@ class MateriasResource(Resource):
     else:
         return repo.get_materias(), 200, {'Access-Control-Allow-Origin': '*'}
 
-'''
-@app.route('/oferta/<username>', methods=['GET'])
-@auth.login_required
-def get_encuesta(username):
-    try:
-        repo = Repository()
-        return repo.get_encuesta_activa(username)
-    except Exception as e:
-        return jsonify({'error': str(e)}),501
-'''
 
 class OfertaResource(Resource):
   "API DE OFERTAS"
@@ -336,7 +293,15 @@ class OfertaResource(Resource):
     else:
         return oferta, 200, {'Access-Control-Allow-Origin': '*'}
 
-class EncuestaResource(Resource):
+@swagger.model
+class EncuestaModel:
+  """Template que se muestra en la consola swagger para el POST de encuentas.
+  Los parametros del __init__ son los campos del json q se envia en el body"""
+  def __init__(self, alumno, materias_aprobadas, materias_preinscripcion,
+    materias_cursaria, materias_cursables, oferta):
+    pass
+
+class EncuestasResource(Resource):
   "API DE ENCUESTAS"
 
   @swagger.operation(
@@ -349,40 +314,57 @@ class EncuestaResource(Resource):
         "required": True,
         "allowMultiple": False,
         "dataType": 'string',
-        "paramType": "path"
+        "paramType": "query"
       }
     ])
 
   @auth.login_required
-  def get(self,username):
+  def get(self):
     repo = Repository()
     try:
-        return repo.get_encuesta_activa(username), 200, {'Access-Control-Allow-Origin': '*'}
+      return repo.get_encuesta_activa(parser.parse_args()['username']), 200, {'Access-Control-Allow-Origin': '*'}
     except Exception as e:
         return {'error': str(e)},501
 
-
-#### TODO: AGREGAR A SWAGGER /resultados y /preinscribir
-
-@app.route('/resultados', methods=['GET'])
-@auth.login_required
-def get_resultados():
-    repo = Repository()
-    return json.dumps(repo.get_resultados())
-
-@app.route('/preinscribir', methods=['POST'])
-@auth.login_required
-def post_preinscribir():
+  @swagger.operation(
+    notes='Crea o actualiza una encuesta',
+    responseClass=EncuestaModel.__name__,
+    nickname='post',
+    parameters=[
+      {
+        "name": "Encuesta",
+        "description": "Datos de la encuesta completada",
+        "required": True,
+        "allowMultiple": False,
+        "dataType": EncuestaModel.__name__,
+        "paramType": "body"
+      }
+    ])
+  @auth.login_required
+  def post(self):
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)
     return 'OK'
+
+
+class ResultadosResource(Resource):
+
+  @swagger.operation(
+    notes='Retorna los resultados de la encuesta actual'
+    )
+  @auth.login_required
+  def get(self):
+    repo = Repository()
+    return repo.get_resultados()
+
 
 api.add_resource(UsuariosResource, '/usuarios')
 api.add_resource(UsuarioResource, '/usuarios/<int:id>')
 api.add_resource(MateriasResource, '/materias')
 api.add_resource(MateriaResource, '/materias/<int:id>')
 api.add_resource(OfertaResource, '/oferta/<int:id>')
-api.add_resource(EncuestaResource, '/encuesta/<string:username>')
+api.add_resource(EncuestasResource, '/encuesta')
+api.add_resource(ResultadosResource, '/resultados')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
