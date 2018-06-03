@@ -6,3 +6,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://ymcmweyxeguwhs:dd2a
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://localhost/encuestas'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:postgres@localhost:5432/encuestas'
 app.config['SECRET_KEY'] = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
+app.config['ADMINS'] = ['nachoyegro@gmail.com', 'nestorgabriel2008@gmail.com']
+
+app.config['EMAIL_HOST'] = 'smtp.mailtrap.io'
+app.config['EMAIL_HOST_USER'] = '2d222580e64237'
+app.config['EMAIL_HOST_PASSWORD'] = 'c812b45ad4d1a3'
+app.config['EMAIL_PORT'] = 2525
+app.config['EMAIL_SUBJECT'] = '[encuesta-preinscripcion-backend] Application Error'
