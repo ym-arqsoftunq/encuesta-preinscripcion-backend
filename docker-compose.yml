@@ -2,6 +2,7 @@
 version: '2.1'
 services:
   encuesta-preinscripcion-backend:
+    container_name: app-backend
     #Que siempre haga restart cuando falle
     restart: always
     #Que haga build en el directorio actual
@@ -9,6 +10,18 @@ services:
     #Los puertos que va a usar
     ports:
       - 5000:5000
+    links:
+     - db
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
+
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: encuestas

@@ -107,6 +107,27 @@ Y luego de poner la contraseña modificar la linea de app.py
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:una_password@localhost:5432/encuestas'
 ```
 
+#### Persistencia con Docker
+Poner IP de la maquina (no localhost) en core/config.py
+Una vez levantado el contenedor docker (ejecutado los pasos de "Build con Docker") ejecutar
+``` bash
+# Entrar al contenedor postgres
+$ sudo docker exec -it postgres psql -U postgres
+# Creo base de datos
+$ CREATE DATABASE encuestas;
+# Salgo del contenedor postgres
+$ \q
+# Entrar al contenedor de nuestra app
+$ sudo docker exec -it app-backend bash
+# Cargo la base de datos
+$ cd core
+$ python manage.py db upgrade
+$ python fixtures.py
+# Salgo del contenedor
+$ exit
+```
+Esto hay que hacerlo solo la primera vez. Luego la base de datos (y los datos) se guardan en nuestra maquina y con $docker-compose up ya tenemos la app andando
+
 ### Swagger UI
 
 Con la app levantada dirigirse a http://localhost:5000/api/spec.html

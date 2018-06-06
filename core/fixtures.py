@@ -3,6 +3,7 @@ from models import *
 from repository import Repository
 import random
 
+# TODO: REINICIAR LAS SECUENCIAS
 def clear_data(db):
     meta = db.metadata
     session = db.session
