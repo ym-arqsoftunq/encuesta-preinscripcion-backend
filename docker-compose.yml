@@ -3,8 +3,8 @@ version: '2.1'
 services:
   encuesta-preinscripcion-backend:
     container_name: app-backend
-    #Que siempre haga restart cuando falle
-    restart: always
+    #Que siempre haga restart cuando falle. Comentar para q no se levante cada vez q se prende la maquina
+    #restart: always
     #Que haga build en el directorio actual
     build: .
     #Los puertos que va a usar

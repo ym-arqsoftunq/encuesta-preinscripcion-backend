@@ -349,7 +349,7 @@ class EncuestasResource(Resource):
   def post(self):
     repo = Repository()
     repo.guardar_encuesta_alumno(request.json)
-    return 'OK'
+    return {'OK': 'Encuesta cargada con exito'}
 
 
 class ResultadosResource(Resource):
