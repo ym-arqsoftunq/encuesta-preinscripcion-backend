@@ -101,7 +101,12 @@ class Repository(object):
         materias = Materia.query.all()
         r = []
         for m in materias:
-            r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id})
+            comisiones = Comision.query.filter_by(materia_id = m.id).all()
+            cs = []
+            for c in comisiones:
+                cs.append({'id': c.id, 'descripcion': c.descripcion, 'cupo': c.cupo})
+            r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id,
+                'comisiones': cs})
         return r
 
     def get_materia_por_nombre(self,nombre):
@@ -109,7 +114,12 @@ class Repository(object):
         if m is None:
             return None
         else:
-            return {'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id}
+            comisiones = Comision.query.filter_by(materia_id = m.id).all()
+            cs = []
+            for c in comisiones:
+                cs.append({'id': c.id, 'descripcion': c.descripcion, 'cupo': c.cupo})
+            return {'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id,
+            'comisiones': cs}
 
     def get_materias_de_oferta(self,oferta_id):
         materias = Materia.query.filter_by(oferta_id=oferta_id).all()

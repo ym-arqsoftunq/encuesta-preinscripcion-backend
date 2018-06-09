@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 '''
 FUNCIONES QUE LLAMAN A LOS DISTINTOS METODOS DE LA API REST
 '''
@@ -19,7 +20,9 @@ def get_usuarios(username = None):
                         auth=auth, params=params, verify=False).json()
 	# response contains the geoJSON object,
 	# pretty print it to the console
-	print json.dumps(response, indent=4)
+	#print json.dumps(response, indent=4)
+
+	return response
 
 def get_usuario(id):
 	response = requests.get(url_base + 'usuarios/' + str(id),
@@ -37,7 +40,8 @@ def get_materias(nombre = None):
 def get_materia(id):
 	response = requests.get(url_base + 'materias/' + str(id),
                     auth=auth, verify=False).json()
-	print json.dumps(response, indent=4)
+	#print json.dumps(response, indent=4)
+	return response
 
 def get_oferta(id):
 	response = requests.get(url_base + 'oferta/' + str(id),
@@ -48,21 +52,17 @@ def get_encuesta(username):
 	params = {'username': username}
 	response = requests.get(url_base + 'encuesta',
                     auth=auth, params=params, verify=False).json()
-	print json.dumps(response, indent=4)
-	return json.dumps(response)
+	#print json.dumps(response, indent=4)
+	return response
 
 def get_resultados():
 	response = requests.get(url_base + 'resultados',
                         auth=auth, verify=False).json()
 	print json.dumps(response, indent=4)
 
-def post_encuesta(username):
-	encuesta = get_encuesta(username)
-
+def post_encuesta(encuesta):
 	response = requests.post(url_base + 'encuesta',
-                    auth=auth, data=encuesta, verify=False,
+                    auth=auth, data=json.dumps(encuesta), verify=False,
                     headers = {'content-type': 'application/json'}).json()
-	print json.dumps(response, indent=4)
-
-if __name__ == '__main__':
-    post_encuesta('nestorgabriel2008')
+	#print json.dumps(response, indent=4)
+	return response

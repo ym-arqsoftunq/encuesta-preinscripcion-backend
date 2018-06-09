@@ -7,7 +7,7 @@ from flask_cli import FlaskCLI
 from flask_sqlalchemy import SQLAlchemy
 
 from repository import Repository
-from models import Materia, Usuario
+from models import Materia, Usuario, Comision
 
 from config import app
 
@@ -240,11 +240,16 @@ class MateriaResource(Resource):
     if materia is None:
         return None
     else:
+        comisiones = Comision.query.filter_by(materia_id = materia.id).all()
+        cs = []
+        for c in comisiones:
+          cs.append({'id': c.id, 'descripcion': c.descripcion, 'cupo': c.cupo})
         return {
             'id': materia.id,
             'nombre': materia.nombre,
             'cuatrimestre': materia.cuatrimestre,
             'oferta_id': materia.oferta_id,
+            'comisiones': cs
         }, 200, {'Access-Control-Allow-Origin': '*'}
 
 class MateriasResource(Resource):
