@@ -7,6 +7,7 @@ services:
     #restart: always
     #Que haga build en el directorio actual
     build: .
+    command: newrelic-admin run-program python core/app.py
     #Los puertos que va a usar
     ports:
       - 5000:5000
@@ -15,6 +16,8 @@ services:
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
+    environment:
+      NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
 
   db:
     container_name: postgres
