@@ -18,6 +18,8 @@ env:
   # There should be a time in the future when this is not necessary - it is
   # explained in more detail below.
   DOCKER_COMPOSE_VERSION: 1.14.0
+  HEROKU_DOCKER_USERNAME: nachoyegro
+  HEROKU_AUTH_TOKEN: d910d6f0-6cb9-4afc-94f9-2274946c62bd
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -30,3 +32,8 @@ script:
 
 cache:
   - pip
+
+after_success:
+  - sudo docker login --username ${HEROKU_DOCKER_USERNAME} --password ${HEROKU_AUTH_TOKEN} registry.heroku.com
+  - sudo docker tag encuestapreinscripcionbackend_encuesta-preinscripcion-backend:latest registry.heroku.com/encuesta-preinscripcion-backend/web
+  - sudo docker push registry.heroku.com/encuesta-preinscripcion-bknd/web
