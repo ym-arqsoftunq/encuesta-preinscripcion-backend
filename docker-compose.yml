@@ -11,8 +11,6 @@ services:
     #Los puertos que va a usar
     ports:
       - 5000:5000
-    links:
-     - db
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
