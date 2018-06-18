@@ -37,4 +37,4 @@ cache:
 after_success:
   - sudo docker login --username ${HEROKU_DOCKER_USERNAME} --password ${HEROKU_AUTH_TOKEN} registry.heroku.com
   - sudo docker tag encuestapreinscripcionbackend_encuesta-preinscripcion-backend:latest registry.heroku.com/encuesta-preinscripcion-backend/web
-  - sudo docker push registry.heroku.com/encuesta-preinscripcion-bknd/web
+  - sudo docker push encuestapreinscripcionbackend_encuesta-preinscripcion-backend:latest

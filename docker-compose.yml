@@ -11,18 +11,24 @@ services:
     #Los puertos que va a usar
     ports:
       - 5000:5000
+    links:
+      - db
+      - memcached
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
     environment:
       NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
 
-  #db:
-#    container_name: postgres
-#    image: postgres
-#    ports:
-#    - "5432:5432"
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: postgres
-#      POSTGRES_DB: encuestas
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: encuestas
+  memcached:
+    container_name: memcached
+    image: memcached:1.5-alpine
