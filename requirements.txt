@@ -44,3 +44,4 @@ Werkzeug==0.12.2
 WTForms==2.1
 flask_restful_swagger==0.19
 newrelic==3.2.1.93
+pymemcache
