@@ -32,3 +32,6 @@ services:
   memcached:
     container_name: memcached
     image: memcached:1.5-alpine
+    ports:
+      #Me conecto a traves de memcached:11211
+      - 11211:11211

@@ -1,7 +1,13 @@
 import os
 from models import Usuario, Materia, Oferta, Encuesta, Comision, db
 
+from pymemcache.client.base import Client
+
+
 class Repository(object):
+
+    def __init__(self):
+        self.cache = Client(('memcached', 11211))
 
     def get_encuesta_activa(self, username):
         encuesta = self.buscar_encuesta_alumno(username)
@@ -94,20 +100,27 @@ class Repository(object):
     def get_resultados(self):
         #En un principio se penso para ver resultados de muchas ofertas, pero se va a hacer solo para la activar
         oferta = Oferta.query.filter(Oferta.activa == True).first()
-        resultados = oferta.get_resultados()
+        #Deberia ser por oferta, pero para la muestra solo hay 1 oferta
+        resultados = self.cache.get('resultados')
+        if not resultados:
+            resultados = oferta.get_resultados()
+            self.cache.set('resultados', resultados)
         return resultados
 
     def get_materias(self):
-        materias = Materia.query.all()
-        r = []
-        for m in materias:
-            comisiones = Comision.query.filter_by(materia_id = m.id).all()
-            cs = []
-            for c in comisiones:
-                cs.append({'id': c.id, 'descripcion': c.descripcion, 'cupo': c.cupo})
-            r.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id,
-                'comisiones': cs})
-        return r
+        resultado = self.cache.get('materias')
+        if not resultado:
+            materias = Materia.query.all()
+            resultado = []
+            for m in materias:
+                comisiones = Comision.query.filter_by(materia_id = m.id).all()
+                cs = []
+                for c in comisiones:
+                    cs.append({'id': c.id, 'descripcion': c.descripcion, 'cupo': c.cupo})
+                resultado.append({'id': m.id, 'nombre': m.nombre, 'cuatrimestre': m.cuatrimestre, 'oferta_id': m.oferta_id,
+                    'comisiones': cs})
+            self.cache.set('materias', resultado)
+        return resultado
 
     def get_materia_por_nombre(self,nombre):
         m = Materia.query.filter_by(nombre=nombre).first()
@@ -129,14 +142,17 @@ class Repository(object):
         return r
 
     def get_usuarios(self):
-        usuarios = Usuario.query.all()
-        r = []
-        for u in usuarios:
-            roles = []
-            for rol in u.roles:
-                roles.append({'id': rol.id, 'name': rol.name})
-            r.append({'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,'roles': roles})
-        return r
+        resultado = self.cache.get('usuarios')
+        if not resultado:
+            resultado = []
+            usuarios = Usuario.query.all()
+            for u in usuarios:
+                roles = []
+                for rol in u.roles:
+                    roles.append({'id': rol.id, 'name': rol.name})
+                resultado.append({'id': u.id, 'nombre': u.nombre, 'username': u.username, 'email': u.email,'roles': roles})
+            self.cache.set('usuarios', resultado)
+        return resultado
 
     def get_usuario_por_username(self,username):
         u = Usuario.query.filter_by(username=username).first()
