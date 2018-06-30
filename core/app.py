@@ -15,7 +15,7 @@ from flask_httpauth import HTTPBasicAuth
 from flask_restful import reqparse, Api, Resource
 from flask_restful_swagger import swagger
 
-from log import set_log
+
 
 
 DEBUG = False
@@ -375,8 +375,3 @@ api.add_resource(MateriaResource, '/materias/<int:id>')
 api.add_resource(OfertaResource, '/oferta/<int:id>')
 api.add_resource(EncuestasResource, '/encuesta')
 api.add_resource(ResultadosResource, '/resultados')
-
-if __name__ == '__main__':
-    if not DEBUG:
-        set_log(app)
-    app.run(host='0.0.0.0', debug=DEBUG)

@@ -1,5 +1,5 @@
 #Docker compose version
-version: '2.1'
+version: '3'
 services:
   encuesta-preinscripcion-backend:
     container_name: app-backend
@@ -7,13 +7,14 @@ services:
     #restart: always
     #Que haga build en el directorio actual
     build: .
-    command: newrelic-admin run-program python core/app.py
+    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
+    restart: always
     #Los puertos que va a usar
     ports:
-      - 5000:5000
+      - 8000:8000
     links:
       - db
-      - memcached
+    #  - nginx
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
@@ -29,6 +30,14 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: encuestas
+  nginx:
+    container_name: nginx-container
+    restart: always
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - encuesta-preinscripcion-backend
   memcached:
     container_name: memcached
     image: memcached:1.5-alpine
