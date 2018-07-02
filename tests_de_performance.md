@@ -23,6 +23,12 @@ En el cuarto minuto se agregan otros 50 hilos llegando a 200 concurrentes. El po
 
 El total del test arroja un porcentaje de error de 38% y un tiempo promedio de respuesta de 20 segundos.
 
+#### Límites de la aplicación
+
+Con 100 usuarios concurrentes la aplicación, si bien no se cae, funciona con tiempos no aceptables y con un porcentaje de error considerablemente alto, 17%.
+
+Con 50 usuarios los tiempos de respuesta no son buenos pero el porcentaje de error se mantiene en cero. Así que podriamos concluir que ese es el límite de la aplicación en la configuración inicial de virtualización.
+
 ![Grafico de tiempo de respuesta](/ResponseTimeGraph1.png)
 
 ### Agregamos más recursos a la aplicación. Crecimiento vertical.
@@ -49,5 +55,11 @@ Minuto 2. 100 hilos. 616 Requests. El tiempo promedio de respuesta es de 5061 ms
 Minuto 3. 150 hilos. 556 Requests. Llamativamente se realizan menos requests que en el minuto 2. El tiempo promedio de respuesta es de 12202 ms y el porcentaje de error es de 0%.
 
 Minuto 4. 200 hilos. 706 Requests. El tiempo promedio de respuesta es de 14173 ms y el porcentaje de error es de 5.38%. El porcentaje de error más alto estuvo en el POST de la encuesta donde fue de 13% y a su vez ese request tuvo el tiempo de respuesta mayor con un promedio de 22353 ms.
+
+El total del test arroja un porcentaje de error de 1.68% y un tiempo promedio de respuesta de 9 segundos en un total de 2263 requests.
+
+#### Límites de la aplicación
+
+Con 100 hilos la aplicación no reportó errores y los tiempos de respuesta no fueron tan malos (tampoco pueden considerarse buenos). Por otro lado, con 150 hilos, aunque el porcentaje de error se mantuvo en cero, los tiempos de respuesta se duplicaron llegando a 12 segundos. Lo que es muy lento para una aplicación web. Por lo tanto podemos concluir que el límite de la aplicación con el crecimiento vertical aplicado es de 100 usuarios concurrentes.
 
 ![Grafico de tiempo de respuesta](/ResponseTimeGraph2.png)
