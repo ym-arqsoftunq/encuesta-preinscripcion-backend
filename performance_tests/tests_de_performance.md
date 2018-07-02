@@ -29,7 +29,7 @@ Con 100 usuarios concurrentes la aplicación, si bien no se cae, funciona con ti
 
 Con 50 usuarios los tiempos de respuesta no son buenos pero el porcentaje de error se mantiene en cero. Así que podriamos concluir que ese es el límite de la aplicación en la configuración inicial de virtualización.
 
-![Grafico de tiempo de respuesta](/ResponseTimeGraph1.png)
+![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph1.png)
 
 ### Agregamos más recursos a la aplicación. Crecimiento vertical.
 
@@ -62,11 +62,11 @@ El total del test arroja un porcentaje de error de 1.68% y un tiempo promedio de
 
 Con 100 hilos la aplicación no reportó errores y los tiempos de respuesta no fueron tan malos (tampoco pueden considerarse buenos). Por otro lado, con 150 hilos, aunque el porcentaje de error se mantuvo en cero, los tiempos de respuesta se duplicaron llegando a 12 segundos. Lo que es muy lento para una aplicación web. Por lo tanto podemos concluir que el límite de la aplicación con el crecimiento vertical aplicado es de 100 usuarios concurrentes.
 
-![Grafico de tiempo de respuesta](/ResponseTimeGraph2.png)
+![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph2.png)
 
 ### Agregamos dos instancias de docker con balanceo de carga. Crecimiento horizontal.
 
-#### Parámetros de docker-compose.yml
+#### Parámetros de docker-compose.yml en las 3 instancias de la aplicación
 
 ``` bash
     # un cpu como maximo
@@ -93,4 +93,4 @@ El total del test arroja un porcentaje de error de 3.42% y un tiempo promedio de
 
 Con 200 hilos concurrentes los tiempos de respuesta de la aplicación fueron relativamente buenos. Menos de 4 segundos en promedio. Pero el porcentaje de error en el submit de la encuesta es bastante alto, poco más de 14%. Todo indica que mejorando el proceso de submit de la encuesta, para reducir errores, los ĺímites de la aplicación, con esta configuración, son más altos.
 
-![Grafico de tiempo de respuesta](/ResponseTimeGraph3.png)
+![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph3.png)
