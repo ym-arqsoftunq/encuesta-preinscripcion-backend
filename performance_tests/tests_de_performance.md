@@ -63,3 +63,34 @@ El total del test arroja un porcentaje de error de 1.68% y un tiempo promedio de
 Con 100 hilos la aplicación no reportó errores y los tiempos de respuesta no fueron tan malos (tampoco pueden considerarse buenos). Por otro lado, con 150 hilos, aunque el porcentaje de error se mantuvo en cero, los tiempos de respuesta se duplicaron llegando a 12 segundos. Lo que es muy lento para una aplicación web. Por lo tanto podemos concluir que el límite de la aplicación con el crecimiento vertical aplicado es de 100 usuarios concurrentes.
 
 ![Grafico de tiempo de respuesta](/ResponseTimeGraph2.png)
+
+### Agregamos dos instancias de docker con balanceo de carga. Crecimiento horizontal.
+
+#### Parámetros de docker-compose.yml
+
+``` bash
+    # un cpu como maximo
+    cpu_quota: 100000
+    # 512 MB como maximo
+    mem_limit: 512m
+```
+
+#### Pruebas con JMeter 3
+
+En comparación con las "Pruebas con JMeter 2" se ve una gran mejora en cantidad de requests servidos y en tiempos de respuesta. Sin embargo también hay un incremento considerable en el procentaje de error que llamativamente ya puede verse en el primer minuto del test. Un dato importante es que todos los errores son del mismo request, el POST de la encuesta.
+
+Minuto 1. 50 hilos. 450 Requests. El tiempo promedio de respuesta es de 778 ms y el porcentaje de error es de 2.22%.
+
+Minuto 2. 100 hilos. 824 Requests. El tiempo promedio de respuesta es de 1693 ms y el porcentaje de error es de 2.55%.
+
+Minuto 3. 150 hilos. 1066 Requests. El tiempo promedio de respuesta es de 2617 ms y el porcentaje de error es de 3.38%.
+
+Minuto 4. 200 hilos. 1284 Requests. El tiempo promedio de respuesta es de 3814 ms y el porcentaje de error es de 4.44%.
+
+El total del test arroja un porcentaje de error de 3.42% y un tiempo promedio de respuesta de 2.5 segundos en un total de 3624 requests.
+
+#### Límites de la aplicación
+
+Con 200 hilos concurrentes los tiempos de respuesta de la aplicación fueron relativamente buenos. Menos de 4 segundos en promedio. Pero el porcentaje de error en el submit de la encuesta es bastante alto, poco más de 14%. Todo indica que mejorando el proceso de submit de la encuesta, para reducir errores, los ĺímites de la aplicación, con esta configuración, son más altos.
+
+![Grafico de tiempo de respuesta](/ResponseTimeGraph3.png)
