@@ -115,7 +115,7 @@ Esto muestra una mejora con respecto a la prueba anterior, de casi 250 requests 
 
 
 
-### Agregamos dos instancias de docker con balanceo de carga. Crecimiento horizontal.
+### Agregamos dos instancias de docker con balanceo de carga de Nginx. Crecimiento horizontal.
 
 #### Parámetros de docker-compose.yml en las 3 instancias de la aplicación
 
