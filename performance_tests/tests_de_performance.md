@@ -37,14 +37,17 @@ Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultá
 
 ##### Tabla de transacciones
 ![Transacciones](/performance_tests/1_instancia_mediocpu/transacciones.png)
+
 La cantidad de transacciones en 15 minutos llega a 9.589.
 
 ##### Gráfico de errores
 ![Errores](/performance_tests/1_instancia_mediocpu/error.png)
+
 El porcentaje de errores en promedio es de 10.90%, llegando al 30% cuando hay 800 usuarios simultáneos.
 
 #### Uso de recursos por contenedor
 ![Hosts](/performance_tests/1_instancia_mediocpu/hosts.png)
+
 Se observa cómo la cantidad de CPU en promedio llega al 61%.
 
 ##### Gráfico tiempos de respuesta
@@ -52,6 +55,7 @@ Se observa cómo la cantidad de CPU en promedio llega al 61%.
 
 ##### Gráfico de requests por minuto (RPM)
 ![Linea](/performance_tests/1_instancia_mediocpu/rpm.png)
+
 La cantidad de requests por minuto (RPM) llega a 533 en promedio.
 
 ### Agregamos más recursos a la aplicación. Crecimiento vertical.
@@ -90,19 +94,21 @@ Con 100 hilos la aplicación no reportó errores y los tiempos de respuesta no f
 #### Crecimiento del tráfico temporal
 
 Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultáneos.
-3 instancias
 
 ##### Tabla de transacciones
 ![Transacciones](/performance_tests/1_instancia/Transacciones_1.png)
+
 La cantidad de transacciones en 15 minutos es de 13.324 en total.
 
 ##### Gráfico de errores
 ![Errores](/performance_tests/1_instancia/Error_1.png)
+
 El porcentaje de errores en promedio es de 8.89%, superando el 10% a partir de 300 usuarios y llegando a un 30% con 800 usuarios.
 Esto muestra una mejora considerable con respecto a la prueba anterior.
 
 #### Uso de recursos por contenedor
 ![Hosts](/performance_tests/1_instancia/Hosts_1.png)
+
 Se puede observar cómo con un sólo contenedor, el uso de cpu es alto. Si bien en promedio parece normal (52%), teniendo en cuenta que la cantidad de usuarios es incremental, llegó al 96% gran parte del final de la prueba.
 
 ##### Gráfico tiempos de respuesta
@@ -110,6 +116,7 @@ Se puede observar cómo con un sólo contenedor, el uso de cpu es alto. Si bien 
 
 ##### Gráfico de requests por minuto (RPM)
 ![Linea](/performance_tests/1_instancia/Rpm_1.png)
+
 La cantidad de requests por minuto (RPM) es en promedio 784.
 Esto muestra una mejora con respecto a la prueba anterior, de casi 250 requests por minuto.
 
@@ -152,14 +159,17 @@ Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultá
 
 ##### Tabla de transacciones
 ![Transacciones](/performance_tests/3_instancias/Transacciones_3.png)
+
 La cantidad de transacciones en 15 minutos llega a 20.085, casi 7mil transacciones más.
 
 ##### Gráfico de errores
 ![Errores](/performance_tests/3_instancias/Error_3.png)
+
 El porcentaje de errores en promedio disminuye al 3.56%. Superando el 10% sólo cuando la cantidad de usuarios simultáneos es cercana a 800.
 
 #### Uso de recursos por contenedor
 ![Hosts](/performance_tests/3_instancias/Hosts_3.png)
+
 Se puede observar como Nginx divide la carga de forma equitativa. La cantidad de cpu en promedio disminuye considerablemente.
 
 ##### Gráfico tiempos de respuesta
@@ -167,4 +177,5 @@ Se puede observar como Nginx divide la carga de forma equitativa. La cantidad de
 
 ##### Gráfico de requests por minuto (RPM)
 ![Linea](/performance_tests/3_instancias/Rpm_3.png)
+
 Se puede observar un crecimiento en la cantidad de requests por minuto (RPM) llegando a un promedio de 1.120 (casi 400 rpm más).
