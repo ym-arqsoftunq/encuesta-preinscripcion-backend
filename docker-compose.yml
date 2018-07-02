@@ -1,5 +1,5 @@
 #Docker compose version
-version: '2'
+version: '2.3'
 services:
   encuesta-preinscripcion-backend_1:
     container_name: app-backend_1
@@ -8,7 +8,7 @@ services:
     #Que haga build en el directorio actual
     build: .
     #command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    command: gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
+    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     restart: always
     #Los puertos que va a usar
     #ports:
@@ -19,35 +19,11 @@ services:
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
-    #environment:
-    #  NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
-    
-    cpu_quota: 100000
-    mem_limit: 512m
-
-  encuesta-preinscripcion-backend_2:
-    container_name: app-backend_2
-    build: .
-    command: gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    restart: always
-    links:
-      - db
-    volumes:
-      - .:/app
-    cpu_quota: 100000
-    mem_limit: 512m
-
-  encuesta-preinscripcion-backend_3:
-    container_name: app-backend_3
-    build: .
-    command: gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    restart: always
-    links:
-      - db
-    volumes:
-      - .:/app
-    cpu_quota: 100000
-    mem_limit: 512m
+    cpus: '0.5'
+    # 256 MB como maximo
+    mem_limit: 256m
+    environment:
+      NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
 
   db:
     container_name: postgres
@@ -58,7 +34,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: encuestas
-      
+
   nginx:
     container_name: nginx-container
     restart: always
@@ -67,8 +43,6 @@ services:
       - "5000:80"
     depends_on:
       - encuesta-preinscripcion-backend_1
-      - encuesta-preinscripcion-backend_2
-      - encuesta-preinscripcion-backend_3
 
   memcached:
     container_name: memcached
