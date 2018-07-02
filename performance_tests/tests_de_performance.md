@@ -31,6 +31,29 @@ Con 50 usuarios los tiempos de respuesta no son buenos pero el porcentaje de err
 
 ![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph1.png)
 
+#### Crecimiento del tráfico temporal
+
+Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultáneos.
+
+##### Tabla de transacciones
+![Transacciones](/performance_tests/1_instancia_mediocpu/transacciones.png)
+La cantidad de transacciones en 15 minutos llega a 9.589.
+
+##### Gráfico de errores
+![Errores](/performance_tests/1_instancia_mediocpu/error.png)
+El porcentaje de errores en promedio es de 10.90%, llegando al 30% cuando hay 800 usuarios simultáneos.
+
+#### Uso de recursos por contenedor
+![Hosts](/performance_tests/1_instancia_mediocpu/hosts.png)
+Se observa cómo la cantidad de CPU en promedio llega al 61%.
+
+##### Gráfico tiempos de respuesta
+![Linea](/performance_tests/1_instancia_mediocpu/linea.png)
+
+##### Gráfico de requests por minuto (RPM)
+![Linea](/performance_tests/1_instancia_mediocpu/rpm.png)
+La cantidad de requests por minuto (RPM) llega a 533 en promedio.
+
 ### Agregamos más recursos a la aplicación. Crecimiento vertical.
 
 Duplicamos los recursos de cpu y memoria en el contenedor de Docker.
@@ -64,6 +87,34 @@ Con 100 hilos la aplicación no reportó errores y los tiempos de respuesta no f
 
 ![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph2.png)
 
+#### Crecimiento del tráfico temporal
+
+Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultáneos.
+3 instancias
+
+##### Tabla de transacciones
+![Transacciones](/performance_tests/1_instancia/Transacciones_1.png)
+La cantidad de transacciones en 15 minutos es de 13.324 en total.
+
+##### Gráfico de errores
+![Errores](/performance_tests/1_instancia/Error_1.png)
+El porcentaje de errores en promedio es de 8.89%, superando el 10% a partir de 300 usuarios y llegando a un 30% con 800 usuarios.
+Esto muestra una mejora considerable con respecto a la prueba anterior.
+
+#### Uso de recursos por contenedor
+![Hosts](/performance_tests/1_instancia/Hosts_1.png)
+Se puede observar cómo con un sólo contenedor, el uso de cpu es alto. Si bien en promedio parece normal (52%), teniendo en cuenta que la cantidad de usuarios es incremental, llegó al 96% gran parte del final de la prueba.
+
+##### Gráfico tiempos de respuesta
+![Linea](/performance_tests/1_instancia/Linea_1.png)
+
+##### Gráfico de requests por minuto (RPM)
+![Linea](/performance_tests/1_instancia/Rpm_1.png)
+La cantidad de requests por minuto (RPM) es en promedio 784.
+Esto muestra una mejora con respecto a la prueba anterior, de casi 250 requests por minuto.
+
+
+
 ### Agregamos dos instancias de docker con balanceo de carga. Crecimiento horizontal.
 
 #### Parámetros de docker-compose.yml en las 3 instancias de la aplicación
@@ -94,3 +145,26 @@ El total del test arroja un porcentaje de error de 3.42% y un tiempo promedio de
 Con 200 hilos concurrentes los tiempos de respuesta de la aplicación fueron relativamente buenos. Menos de 4 segundos en promedio. Pero el porcentaje de error en el submit de la encuesta es bastante alto, poco más de 14%. Todo indica que mejorando el proceso de submit de la encuesta, para reducir errores, los ĺímites de la aplicación, con esta configuración, son más altos.
 
 ![Grafico de tiempo de respuesta](/performance_tests/ResponseTimeGraph3.png)
+
+#### Crecimiento del tráfico temporal
+
+Se realizan pruebas durante 15 minutos, llegando hasta los 800 usuarios simultáneos.
+
+##### Tabla de transacciones
+![Transacciones](/performance_tests/3_instancias/Transacciones_3.png)
+La cantidad de transacciones en 15 minutos llega a 20.085, casi 7mil transacciones más.
+
+##### Gráfico de errores
+![Errores](/performance_tests/3_instancias/Error_3.png)
+El porcentaje de errores en promedio disminuye al 3.56%. Superando el 10% sólo cuando la cantidad de usuarios simultáneos es cercana a 800.
+
+#### Uso de recursos por contenedor
+![Hosts](/performance_tests/3_instancias/Hosts_3.png)
+Se puede observar como Nginx divide la carga de forma equitativa. La cantidad de cpu en promedio disminuye considerablemente.
+
+##### Gráfico tiempos de respuesta
+![Linea](/performance_tests/3_instancias/Linea_3.png)
+
+##### Gráfico de requests por minuto (RPM)
+![Linea](/performance_tests/3_instancias/Rpm_3.png)
+Se puede observar un crecimiento en la cantidad de requests por minuto (RPM) llegando a un promedio de 1.120 (casi 400 rpm más).
