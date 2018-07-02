@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="build-web-test-plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="alumnos" elementType="Argument">
+            <stringProp name="Argument.name">alumnos</stringProp>
+            <stringProp name="Argument.value">(juan.yegro-alumno,nestorgabriel2008-nestor,nestorgabriel2004-nestor,sinencuesta-sinencuesta,alumno-alumno,claudiof-claudio,leonardo.volinier-leonardo,director-director)</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="encuesta" elementType="Argument">
+            <stringProp name="Argument.name">encuesta</stringProp>
+            <stringProp name="Argument.value">{&quot;alumno&quot;: {&quot;username&quot;: &quot;nestorgabriel2004&quot;, &quot;nombre&quot;: &quot;Nestor Mu\u00f1oz 2&quot;, &quot;id&quot;: 4}, &quot;materias_cursables&quot;: [{&quot;cuatrimestre&quot;: 1, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 1, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Martes de 20hs a 22hs&quot;, &quot;id&quot;: 2, &quot;cupo&quot;: 40}], &quot;id&quot;: 1, &quot;nombre&quot;: &quot;Introduccion a la programacion&quot;}, {&quot;cuatrimestre&quot;: 1, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 3, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Martes de 20hs a 22hs&quot;, &quot;id&quot;: 4, &quot;cupo&quot;: 40}], &quot;id&quot;: 2, &quot;nombre&quot;: &quot;Matematica 1&quot;}, {&quot;cuatrimestre&quot;: 1, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 5, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Martes de 20hs a 22hs&quot;, &quot;id&quot;: 6, &quot;cupo&quot;: 40}], &quot;id&quot;: 3, &quot;nombre&quot;: &quot;Organizacion de computadoras&quot;}, {&quot;cuatrimestre&quot;: 2, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Miercoles de 18hs a 20hs&quot;, &quot;id&quot;: 7, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 8, &quot;cupo&quot;: 40}], &quot;id&quot;: 4, &quot;nombre&quot;: &quot;Programacion con objetos 1&quot;}, {&quot;cuatrimestre&quot;: 2, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Miercoles de 18hs a 20hs&quot;, &quot;id&quot;: 9, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 10, &quot;cupo&quot;: 40}], &quot;id&quot;: 5, &quot;nombre&quot;: &quot;Estructuras de datos&quot;}, {&quot;cuatrimestre&quot;: 2, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Miercoles de 18hs a 20hs&quot;, &quot;id&quot;: 11, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 12, &quot;cupo&quot;: 40}], &quot;id&quot;: 6, &quot;nombre&quot;: &quot;Bases de datos&quot;}, {&quot;cuatrimestre&quot;: 3, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Viernes de 18hs a 20hs&quot;, &quot;id&quot;: 13, &quot;cupo&quot;: 50}, {&quot;descripcion&quot;: &quot;Sabados de 10hs a 12hs&quot;, &quot;id&quot;: 14, &quot;cupo&quot;: 30}], &quot;id&quot;: 7, &quot;nombre&quot;: &quot;Matematica 2&quot;}, {&quot;cuatrimestre&quot;: 3, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Viernes de 18hs a 20hs&quot;, &quot;id&quot;: 15, &quot;cupo&quot;: 50}, {&quot;descripcion&quot;: &quot;Sabados de 10hs a 12hs&quot;, &quot;id&quot;: 16, &quot;cupo&quot;: 30}], &quot;id&quot;: 8, &quot;nombre&quot;: &quot;Programacion con objetos 2&quot;}, {&quot;cuatrimestre&quot;: 3, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Viernes de 18hs a 20hs&quot;, &quot;id&quot;: 17, &quot;cupo&quot;: 50}, {&quot;descripcion&quot;: &quot;Sabados de 10hs a 12hs&quot;, &quot;id&quot;: 18, &quot;cupo&quot;: 30}], &quot;id&quot;: 9, &quot;nombre&quot;: &quot;Sistemas operativos&quot;}, {&quot;cuatrimestre&quot;: 3, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Viernes de 18hs a 20hs&quot;, &quot;id&quot;: 19, &quot;cupo&quot;: 50}, {&quot;descripcion&quot;: &quot;Sabados de 10hs a 12hs&quot;, &quot;id&quot;: 20, &quot;cupo&quot;: 30}], &quot;id&quot;: 10, &quot;nombre&quot;: &quot;Redes de computadoras&quot;}, {&quot;cuatrimestre&quot;: 4, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 21, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 22, &quot;cupo&quot;: 40}], &quot;id&quot;: 11, &quot;nombre&quot;: &quot;Estrategias de persistencia&quot;}, {&quot;cuatrimestre&quot;: 4, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 23, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 24, &quot;cupo&quot;: 40}], &quot;id&quot;: 12, &quot;nombre&quot;: &quot;Construccion de interfaces de usuario&quot;}, {&quot;cuatrimestre&quot;: 4, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 25, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 26, &quot;cupo&quot;: 40}], &quot;id&quot;: 13, &quot;nombre&quot;: &quot;Elementos de ingenieria de software&quot;}, {&quot;cuatrimestre&quot;: 4, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Lunes de 18hs a 20hs&quot;, &quot;id&quot;: 27, &quot;cupo&quot;: 30}, {&quot;descripcion&quot;: &quot;Jueves de 20hs a 22hs&quot;, &quot;id&quot;: 28, &quot;cupo&quot;: 40}], &quot;id&quot;: 14, &quot;nombre&quot;: &quot;Programacion concurrente&quot;}, {&quot;cuatrimestre&quot;: 5, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Martes de 18hs a 20hs&quot;, &quot;id&quot;: 29, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Viernes de 20hs a 22hs&quot;, &quot;id&quot;: 30, &quot;cupo&quot;: 50}], &quot;id&quot;: 15, &quot;nombre&quot;: &quot;Desarrollo de aplicaciones&quot;}, {&quot;cuatrimestre&quot;: 5, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Martes de 18hs a 20hs&quot;, &quot;id&quot;: 31, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Viernes de 20hs a 22hs&quot;, &quot;id&quot;: 32, &quot;cupo&quot;: 50}], &quot;id&quot;: 16, &quot;nombre&quot;: &quot;Programacion funcional&quot;}, {&quot;cuatrimestre&quot;: 5, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Martes de 18hs a 20hs&quot;, &quot;id&quot;: 33, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Viernes de 20hs a 22hs&quot;, &quot;id&quot;: 34, &quot;cupo&quot;: 50}], &quot;id&quot;: 17, &quot;nombre&quot;: &quot;Laboratorio de sistemas operativos y redes&quot;}], &quot;materias_aprobadas&quot;: [], &quot;oferta&quot;: {&quot;nombre&quot;: &quot;2017s2&quot;, &quot;id&quot;: 1}, &quot;materias_cursaria&quot;: [], &quot;materias_preinscripcion&quot;: [{&quot;cuatrimestre&quot;: 5, &quot;comisiones&quot;: [{&quot;descripcion&quot;: &quot;Martes de 18hs a 20hs&quot;, &quot;id&quot;: 33, &quot;cupo&quot;: 40}, {&quot;descripcion&quot;: &quot;Viernes de 20hs a 22hs&quot;, &quot;id&quot;: 34, &quot;cupo&quot;: 50}], &quot;comision_seleccionada&quot;: {&quot;descripcion&quot;: &quot;Martes de 18hs a 20hs&quot;, &quot;id&quot;: 33, &quot;cupo&quot;: 40}, &quot;id&quot;: 17, &quot;nombre&quot;: &quot;Laboratorio de sistemas operativos y redes&quot;}]} </stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Tests durante 15 min" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">800</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">850</stringProp>
+        <longProp name="ThreadGroup.start_time">1373789594000</longProp>
+        <longProp name="ThreadGroup.end_time">1373789594000</longProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">900</stringProp>
+        <stringProp name="ThreadGroup.delay">0</stringProp>
+        <stringProp name="TestPlan.comments">Virtual Users Running Scenario 1. 
+Make test last 1 minute (see Scheduler)</stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
+          <stringProp name="HTTPSampler.port">5000</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="TestPlan.comments">Notice Timeouts:
+Read to 30s
+Connect to 5s</stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">5000</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">30000</stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="User-Agent" elementType="Header">
+              <stringProp name="Header.name">User-Agent</stringProp>
+              <stringProp name="Header.value"> Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:48.0) Gecko/20100101 Firefox/48.0</stringProp>
+            </elementProp>
+            <elementProp name="Accept" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value"> text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+            </elementProp>
+            <elementProp name="Accept-Language" elementType="Header">
+              <stringProp name="Header.name">Accept-Language</stringProp>
+              <stringProp name="Header.value"> fr,en-US;q=0.7,en;q=0.3</stringProp>
+            </elementProp>
+            <elementProp name="Accept-Encoding" elementType="Header">
+              <stringProp name="Header.name">Accept-Encoding</stringProp>
+              <stringProp name="Header.value"> gzip, deflate</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="ThinkTime1s" enabled="true">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">0</stringProp>
+        </TestAction>
+        <hashTree>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="URT" enabled="true">
+            <stringProp name="ConstantTimer.delay">1000</stringProp>
+            <stringProp name="RandomTimer.range">100.0</stringProp>
+          </UniformRandomTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Page Returning 404" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables pré-définies" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/test</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="TestPlan.comments">It does not fails because we use an assertion that ignores status</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assertion_404" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="51512">404</stringProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">The assertion is specia:
+- It ignores status which would make it in error by default (404)
+- It checks Response Code is equal to 404</stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="HTTP Authorization Manager" enabled="true">
+          <collectionProp name="AuthManager.auth_list">
+            <elementProp name="" elementType="Authorization">
+              <stringProp name="Authorization.url">http://127.0.0.1:5000/materias</stringProp>
+              <stringProp name="Authorization.username">${USERNAME}</stringProp>
+              <stringProp name="Authorization.password">${PASSWORD}</stringProp>
+              <stringProp name="Authorization.domain"></stringProp>
+              <stringProp name="Authorization.realm"></stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Authorization">
+              <stringProp name="Authorization.url">http://127.0.0.1:5000/encuesta</stringProp>
+              <stringProp name="Authorization.username">${USERNAME}</stringProp>
+              <stringProp name="Authorization.password">${PASSWORD}</stringProp>
+              <stringProp name="Authorization.domain"></stringProp>
+              <stringProp name="Authorization.realm"></stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Authorization">
+              <stringProp name="Authorization.url">http://127.0.0.1:5000/resultados</stringProp>
+              <stringProp name="Authorization.username">${USERNAME}</stringProp>
+              <stringProp name="Authorization.password">${PASSWORD}</stringProp>
+              <stringProp name="Authorization.domain"></stringProp>
+              <stringProp name="Authorization.realm"></stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Authorization">
+              <stringProp name="Authorization.url">http://127.0.0.1:5000/usuarios</stringProp>
+              <stringProp name="Authorization.username">${USERNAME}</stringProp>
+              <stringProp name="Authorization.password">${PASSWORD}</stringProp>
+              <stringProp name="Authorization.domain"></stringProp>
+              <stringProp name="Authorization.realm"></stringProp>
+            </elementProp>
+          </collectionProp>
+          <boolProp name="AuthManager.clearEachIteration">true</boolProp>
+        </AuthManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Encuesta" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables pré-définies" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="username" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${USERNAME}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">username</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/encuesta</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySamplerProperties">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugPostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">vars.put(&quot;encuesta&quot;, new String(data));</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Encuesta-POST" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${encuesta}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/encuesta</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+            <stringProp name="ConstantTimer.delay">10000</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="TestPlan.comments">For scripting only</stringProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+        <stringProp name="filename">/Users/nachoyegro/Desktop/usuarios.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">USERNAME,PASSWORD</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
