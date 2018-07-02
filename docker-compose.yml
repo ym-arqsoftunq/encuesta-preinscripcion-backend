@@ -19,9 +19,9 @@ services:
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
-    cpus: '0.5'
+    cpus: '1'
     # 256 MB como maximo
-    mem_limit: 256m
+    mem_limit: 512m
     environment:
       NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
 
