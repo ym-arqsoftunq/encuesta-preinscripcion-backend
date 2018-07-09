@@ -179,3 +179,11 @@ Se puede observar como Nginx divide la carga de forma equitativa. La cantidad de
 ![Linea](/performance_tests/3_instancias/Rpm_3.png)
 
 Se puede observar un crecimiento en la cantidad de requests por minuto (RPM) llegando a un promedio de 1.120 (casi 400 rpm más).
+
+### Conclusiones
+
+Si bien, como vimos, el crecimiento horizontal nos dio resultados más que satisfactorios, decidimos utilizar una única instancia de la aplicación para encontrar un balance entre costos y beneficios. Para esto seguimos ejecutando tests con diferentes límites de memoria y CPU en una única instancia con el objetivo de arribar a una configuración de recursos minimos que cubra una demanda de 300 rpm, que es lo que suponemos necesario para funcionar correctamente en un contexto real.
+
+Ejecutamos un test de 15 minutos con 100 usuarios usando la aplicación simultaneamente. Los recursos de la aplicación fueron 1 CPU de 1.3GHz y un límite de memoria de 256 MB. Los resultados fueron muy satisfactorios. Con 746 rpm el porcentaje de error fue de 0%, el tiempo promedio de respuestas fue de 61,4 ms, el uso de CPU promedio fue de 59% y el de memoria fue de solo 63 MB. Por lo tanto, a partir de estas métricas obtenidas, podemos concluir en que esta configuración de recursos mínimos es adecuada y cumpliría con los requisitos en un contexto real.
+
+![Grafico 1host_1cpu_256mb.png](/performance_tests/1host_1cpu_256mb.png)

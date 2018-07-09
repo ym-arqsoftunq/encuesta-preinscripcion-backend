@@ -4,18 +4,15 @@ services:
   encuesta-preinscripcion-backend_1:
     container_name: app-backend_1
     #Que siempre haga restart cuando falle. Comentar para q no se levante cada vez q se prende la maquina
-    #restart: always
+    restart: always
     #Que haga build en el directorio actual
     build: .
-    #command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    restart: always
     #Los puertos que va a usar
     #ports:
     #  - 8000:8000
     links:
       - db
-    #  - nginx
     #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
@@ -24,20 +21,11 @@ services:
 
   encuesta-preinscripcion-backend_2:
     container_name: app-backend_2
-    #Que siempre haga restart cuando falle. Comentar para q no se levante cada vez q se prende la maquina
-    #restart: always
-    #Que haga build en el directorio actual
-    build: .
-    #command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     restart: always
-    #Los puertos que va a usar
-    #ports:
-    #  - 8000:8000
+    build: .
+    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     links:
       - db
-    #  - nginx
-    #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
     environment:
@@ -45,25 +33,15 @@ services:
 
   encuesta-preinscripcion-backend_3:
     container_name: app-backend_3
-    #Que siempre haga restart cuando falle. Comentar para q no se levante cada vez q se prende la maquina
-    #restart: always
-    #Que haga build en el directorio actual
-    build: .
-    #command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
-    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     restart: always
-    #Los puertos que va a usar
-    #ports:
-    #  - 8000:8000
+    build: .
+    command: newrelic-admin run-program gunicorn -w 1 -b :8000 wsgi:app --error-logfile logs/error.log
     links:
       - db
-    #  - nginx
-    #El directorio que va a actualizar cuando vea cambios
     volumes:
       - .:/app
     environment:
       NEW_RELIC_CONFIG_FILE: /app/newrelic.ini
-
 
   db:
     container_name: postgres
@@ -83,6 +61,8 @@ services:
       - "5000:80"
     depends_on:
       - encuesta-preinscripcion-backend_1
+      - encuesta-preinscripcion-backend_2
+      - encuesta-preinscripcion-backend_3
 
   memcached:
     container_name: memcached
